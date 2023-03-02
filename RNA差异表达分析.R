@@ -1,4 +1,5 @@
 ############################
+# 安装包
 # if (!requireNamespace("BiocManager", quietly = TRUE))
 # install.packages("BiocManager")
 
@@ -52,7 +53,7 @@ venn.diagram(  x = list(SE,RI,MXE,A5SS,A3SS),
 ) 
 
 
-######  FPKM的计算  #####
+################  FPKM的计算  #####################
 # install.packages("tidyverse")
 # install.packages("data.table")
 ####
@@ -75,7 +76,7 @@ dim(geneid_efflen)
 efflen <- geneid_efflen[match(rownames(counts),                               
                               geneid_efflen$geneid),"efflen"] 
 
-# FPKM/RPKM (Fragments/Reads Per Kilobase Million )  每千个碱基的转录每百万映射读取的Fragments/reads 
+###################################### FPKM/RPKM (Fragments/Reads Per Kilobase Million )  每千个碱基的转录每百万映射读取的Fragments/reads 
 counts2FPKM <- function(count=count, efflength=efflen){    
   PMSC_counts <- sum(count)/1e6   #counts的每百万缩放因子 (“per million” scaling factor) 深度标准化   
   FPM <- count/PMSC_counts        #每百万reads/Fragments (Reads/Fragments Per Million) 长度标准化   
@@ -87,7 +88,7 @@ FPKM <- FPKM[rowSums(FPKM)>1,] # 去除全部为0的列
 colSums(FPKM) 
 
 
-#当前推荐使用 TPM 进行相关性分析、PCA分析等 (Transcripts Per Kilobase Million)  每千个碱基的转录每百万映射读取的Transcripts 
+##########当前推荐使用 TPM 进行相关性分析、PCA分析等 (Transcripts Per Kilobase Million)  每千个碱基的转录每百万映射读取的Transcripts 
 counts2TPM <- function(count=count, efflength=efflen){   
   RPK <- count/(efflength/1000)   #每千碱基reads (reads per kilobase) 长度标准化   
   PMSC_rpk <- sum(RPK)/1e6        #RPK的每百万缩放因子 (“per million” scaling factor ) 深度标准化   
@@ -98,7 +99,7 @@ colnames(TPM) <- c("Simmental_1","Simmental_2","Simmental_3","Wagyu_1","Wagyu_2"
 TPM <- TPM[rowSums(TPM)>1,] # 去除全部为0的列
 colSums(TPM)
 
-############    Spearman相关性分析 使用TPM值  ###########
+###########################    Spearman相关性分析 使用TPM值  ################################
 #  R语言里自带的相关性分析的函数是cor()，默认的皮尔逊相关性分析,
 sp.data<- cor(TPM, method = "spearman")
 # 图展示
@@ -114,7 +115,7 @@ corrplot(sp.data, order = "hclust", addrect = 2, rect.col = "black",hclust.metho
 library(PerformanceAnalytics)
 chart.Correlation(sp.data,histogram = T,pch=19)
 
-###### PCA  使用TPM值 ###### 
+###################### PCA  使用TPM值 ############################
 data <- t(TPM)
 data.pca <- prcomp(data, scale. = T)  #对数据标准化后做PCA，这是后续作图的文件 
 summary(data.pca)  # 查看结果文件
@@ -142,25 +143,25 @@ fviz_pca_ind(data.pca, col.ind=group,
 
 
 
-###### DESeq2 #####
+################################ DESeq2 ##################################
 
-###数据读入和处理
+##  数据读入和处理
 rm(list=ls()) 
-countdata<- read.table("all_fcount.matrix.txt", header=TRUE,row.names = 1) #导入数据
-head(countdata) # 查看数据前几行(列名 太长自己展示看)
+countdata<- read.table("all_fcount.matrix.txt", header=TRUE,row.names = 1)
+head(countdata) 
+
+##  过滤低丰度counts
 ##  过滤featurecounts后，每个样本计数小于等于10的！！！！！！！
 countdata.filter<-countdata[rowSums(countdata)>=1&apply(countdata,1,function(x){all(x>=10)}),]
 head(countdata.filter) 
-
-colnames(countdata.filter) <- c("Han",rep("DP",3),rep("Han",3),"DP","Han","Han","DP","DP")# 修改列名
-head(countdata.filter)
 dim(countdata.filter) # 查看数据维度，即几行几列
 
-################  dds矩阵的创建 ###############
+#####################  dds矩阵的创建 ####################
 library(DESeq2)
 condition <- factor(c(rep("Zebu",5),rep("Holstein",5))) # 赋值因子，即变量
 coldata <- data.frame(row.names=colnames(countdata.filter), condition) # 创建一个condition数据框
 dds <- DESeqDataSetFromMatrix(countData=countdata.filter, colData=coldata, design=~condition) ##构建dds矩阵(后面很多分析都是基于这个dds矩阵)
+
 
 ###############  PCA分析 使用对dds矩阵处理后的vst或rld值#################### 
 #计算每个样本的归一化系数
@@ -179,7 +180,6 @@ plotPCA( DESeqTransform(raw), intgroup=c("condition"))+theme_bw()+ theme(panel.g
                                                             panel.grid.minor = element_blank())
 plotPCA(vsd, intgroup=c("condition"))
 plotPCA(rld, intgroup=c("condition"))
-
 
 
 
@@ -250,49 +250,6 @@ up_names<-rownames(up)
 write.table(up_names,'up_gene.txt',quote = F,sep = '\t',row.names = F)
 down_names <- rownames(down)
 write.table(down_names,'down_gene.txt',quote = F,sep = '\t',row.names = F)
-
- 
-
-
-
-#######  Muffz时序表达聚类分析(Mac)   ######
-## 使用（rld/vst）均一化后的表达矩阵
-exprSet_new=assay(rld)
-library("Mfuzz")
-library('dplyr')
-count <- data.matrix(exprSet_new)
-eset <- new("ExpressionSet",exprs = count)
-# 根据标准差去除样本间差异太小的基因
-eset <- filter.std(eset,min.std=0)
-eset <- standardise(eset)
-
-### 基因表达聚类，
-## 纵坐标为 随时间变化的表达量
-## 横坐标为 时间
-# 如何决定聚类个数？
-c <- 16
-#  评估出最佳的m值
-m <- mestimate(eset)
-# 聚类
-cl <- mfuzz(eset, c = c, m = m)
-mfuzz.plot(eset,cl,
-  mfrow=c(4,4),## 4行4列布局
-  new.window= FALSE)
-
-#每个簇下基因数量
-cl$size
-#每个基因所属簇
-head(cl$cluster)
-#基因和 cluster 之间的 membership，用于判断基因所属簇，对应最大值的那个簇
-head(cl$membership)
-#整合关系输出
-gene_cluster <- cbind(cl$cluster, cl$membership)
-colnames(gene_cluster)[1] <- 'cluster'
-
-# 每个簇中的基因，具有相似的时间表达特征
-# 黄线和绿线表示随时间变化表达量相差小的基因，红线和紫线表明随时间变化表达量相差大的基因。
-
-
 
 
 #######  表达矩阵探索,选取差异表达的基因做热图  deseq后的排序文件 ######
