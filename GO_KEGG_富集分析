@@ -1,0 +1,222 @@
+
+# GO及KEGG富集分析
+
+#### 安装包 #####
+# install.packages("BiocManager")
+# BiocManager::install(version = "3.13")
+# BiocManager::install("gprofiler2")
+# BiocManager::install("clusterProfiler")
+# BiocManager::install("AnnotationHub")
+# BiocManager::install("org.Bt.eg.db") ##方法1：安装牛注释数据包
+#############
+library(AnnotationDbi)
+library(AnnotationHub)
+## 羊
+# hub = AnnotationHub()
+# query<-query(hub, "org.Ovis_aries.eg.sqlite")
+# sheep.db <- hub[['AH85595']]
+setwd("D:/生信/sheep.db")
+sheep.db <- AnnotationDbi::loadDb('org.Ovis_aries.eg.sqlite')
+columns(sheep.db)
+
+## 牛
+setwd("D:/生信/cattle.db")
+bos.db <- AnnotationDbi::loadDb('org.Bt.eg.db.sqlite')## 方法2：下载到本地加载,每次使用上传
+columns(bos.db)
+
+#### 读取基因列表文件中的基因名称，上下调分开做 ######
+library("org.Bt.eg.db")
+library(clusterProfiler)
+
+setwd("D:/桌面/DP-STH/AS_M/富集结果")
+#GO富集分析,上下调分开做
+genes <- read.table('GENEID.txt', header = T, stringsAsFactors = FALSE,sep = '\t')
+#转id
+covID <- bitr(genes$GeneID, fromType = "SYMBOL",
+              toType = "ENTREZID", OrgDb = sheep.db, drop = T) 
+
+#对于加载的注释库的使用，以上述为例，就直接在 OrgDb 中指定人（org.Hs.eg.db）或绵羊（sheep）
+enrich.go <- enrichGO(gene = genes$GeneID,  #基因列表文件中的基因名称
+                      OrgDb = sheep.db,  #指定物种的基因数据库
+                      keyType = 'SYMBOL',  #指定给定的基因名称类型，例如这里以 SYMBOL 为例
+                      ont = 'ALL',  #可选 BP、MF、CC，也可以指定 ALL 同时计算 3 者
+                      pAdjustMethod = 'BH',  #指定 p 值校正方法
+                      pvalueCutoff = 1,  #指定 p 值阈值，不显著的值将不显示在结果中
+                      qvalueCutoff = 1  #指定 q 值阈值，不显著的值将不显示在结果中
+                     )
+
+write.table(enrich.go@result,'GO-AS-2.txt',sep = '\t',quote = F)
+
+
+
+# 例如上述指定 ALL 同时计算 BP、MF、CC，这里将它们作个拆分后输出
+BP <- enrich.go[enrich.go$ONTOLOGY=='BP', ]
+CC <- enrich.go[enrich.go$ONTOLOGY=='CC', ]
+MF <- enrich.go[enrich.go$ONTOLOGY=='MF', ]
+write.table(as.data.frame(BP), 'go.BP.txt', sep = '\t', row.names = FALSE, quote = FALSE)
+write.table(as.data.frame(CC), 'go.CC.txt', sep = '\t', row.names = FALSE, quote = FALSE)
+write.table(as.data.frame(MF), 'go.MF.txt', sep = '\t', row.names = FALSE, quote = FALSE)
+
+
+
+
+# kegg， 上下调分开做
+library(clusterProfiler)
+genes <- read.table('txt', header = T, stringsAsFactors = FALSE,sep = '\t')
+covID <- bitr(genes$V1, fromType = "SYMBOL",
+              toType="ENTREZID",OrgDb= bos.db , drop = TRUE) # 转换为entrezID，KEGG只识别这种ID
+write.table(covID,'ENTREZID-up.txt',sep = '\t',quote = F) # 写出去保存
+
+#每次打开R计算时，它会自动连接kegg官网获得最近的物种注释信息，因此数据库一定都是最新的
+search_kegg_organism("sheep", by="common_name") # 寻找对应动物的organism
+
+R.utils::setOption("clusterProfiler.download.method",'auto') 
+enrich_kegg <- enrichKEGG(gene = covID$ENTREZID, # 基因列表文件中的基因名
+                          organism = 'oas',  # 指定物种，牛为bta,羊为oas
+                          keyType = 'kegg', # kegg富集
+                          pAdjustMethod = 'BH', # 指定矫正方法
+                          pvalueCutoff = 1, # 指定p值阈值，不显著的值将不显示在结果中
+                          qvalueCutoff = 1) # 指定q值阈值，不显著的值将不显示在结果中
+#输出结果
+write.table(enrich_kegg@result,'kegg-AS.txt',quote = F,sep = '\t')
+
+
+# 富集气泡图
+
+library(ggplot2)
+dotplot(enrich.go,       # GO富集分析结果
+        split="ONTOLOGY", showCategory = 15, #展示前20个点，默认为10个
+        x = "GeneRatio",  # 横坐标,默认GeneRation,也可以为Count
+        color = "p.adjust",  #右纵坐标,默认p.adjust,也可以为pvalue和qvalue
+        size = NULL,  #点的大小
+        title = "kegg_dotplot" ) + #设置图片的标题 
+  facet_grid(ONTOLOGY~., scale="free")
+
+dotplot(enrich_kegg,
+        showCategory = 15,#展示前15个点，默认为10个
+        x = "GeneRatio",  # 横坐标,默认GeneRation,也可以为Count
+        y = "Description",
+        color = 'pvalue',
+        title = "kegg_dotplot")
+
+
+# 条形图
+
+barplot(enrich_kegg,       
+        showCategory = 15,#展示前15个点，默认为10个
+        x = "GeneRatio",  # 横坐标,默认GeneRation,也可以为Count
+        color = 'pvalue',
+        label_format = 100, # 设置标签长度
+        title = "kegg_dotplot")
+
+barplot(enrich.go, split="ONTOLOGY",      
+        showCategory = 15,#展示前15个点，默认为10个
+        x = "GeneRatio",  # 横坐标,默认GeneRation,也可以为Count
+        color = 'pvalue',
+        label_format = 100, # 设置标签长度
+        title = "GO-term")+ 
+  facet_grid(ONTOLOGY~., scale="free")
+
+
+###### up及down基因的合并处理  #####
+gene_down <- read.table('up_gene.txt', header = T, stringsAsFactors = FALSE,sep = '\t')
+gene_up <- read.table('down_gene.txt', header = T, stringsAsFactors = FALSE,sep = '\t')
+# 转基因ID
+library("org.Bt.eg.db")
+library(clusterProfiler)
+deg.up.gene <- bitr(gene_up$x, fromType = "SYMBOL", toType = "ENTREZID", OrgDb = "org.Bt.eg.db")$ENTREZID 
+deg.down.gene <- bitr(gene_down$x, fromType = "SYMBOL", toType = "ENTREZID", OrgDb = "org.Bt.eg.db")$ENTREZID
+
+# 将up 和 down基因合并到一个表格
+deg.ei.ls <- list(up = deg.up.gene, down = deg.down.gene)
+
+# GO
+
+GO.cmp <- compareCluster(deg.ei.ls,
+                         fun = "enrichGO",
+                         qvalueCutoff = 1, 
+                         pvalueCutoff = 1,
+                         pAdjustMethod = 'BH',
+                         ont = 'ALL', #可选 BP、MF、CC，也可以指定 ALL 同时计算 3 者
+                         OrgDb = "org.Bt.eg.db")
+write.table(GO.cmp@compareClusterResult,'GO-up-down-1.txt',sep = '\t',quote = F)
+
+
+# 条形图
+library(ggplot2)
+library(ggsci)
+ddf<-read.table('GO-AS.txt',header = T,sep = '\t')
+dat=ddf
+dat$Cluster = ifelse(dat$Cluster =='up',1,-1)
+dat$pvalue = -log10(dat$pvalue)
+dat$pvalue <- dat$pvalue*dat$Cluster
+dat=dat[order(dat$pvalue,decreasing = F),]
+
+ggplot(dat, aes(x=reorder(Description,order(pvalue, decreasing = F)), 
+                y=pvalue,fill=Cluster)) + 
+  geom_bar(stat="identity",width = 0.78,position = position_dodge(0.7)) + 
+  scale_fill_gradient(low="#3685af",high="#af4236",guide = FALSE)+
+  scale_x_discrete(name ="GO Terms") +
+  #scale_y_discrete(labels =Description )
+  scale_y_continuous(name ="-log10Pvalue",expand = c(0,0)) +
+  coord_flip() +  # 翻转坐标
+  theme(panel.grid.major.y = element_blank(),panel.grid.minor.y = element_blank())+ #删除纵向网络
+  theme(axis.text.y = element_blank())+ #刻度标签空白
+  theme(axis.ticks = element_blank())+ #刻度为空白
+  theme(panel.border = element_blank())+ #边框为空白
+  theme(axis.text=element_text(face = "bold",size = 15),
+        axis.title = element_text(face = 'bold',size = 15), #坐标轴字体
+        plot.title = element_text(size = 20,hjust = 0.3), 
+        legend.position = "top",panel.grid = element_line(colour = 'white'))+
+  geom_text(aes(label=Description),size=3.5,hjust=ifelse(dat$pvalue>0,1.5,-0.5))+ # 两侧加上标签文字
+  ggtitle("The most enriched GO-BP terms")  # 添加标题
+
+
+
+
+#  KEGG, 上下调一起做
+####### install.packages("R.utils")
+
+R.utils::setOption("clusterProfiler.download.method",'auto') 
+kegg.cmp <- compareCluster(deg.ei.ls,
+                           fun = "enrichKEGG",
+                           qvalueCutoff = 1, 
+                           pvalueCutoff = 1,
+                           pAdjustMethod = 'BH',
+                           organism = 'bta')
+
+write.table(kegg.cmp@compareClusterResult,'kegg-up-down-pq.1.txt',sep = '\t',quote = F)
+
+
+
+
+
+
+### cnetplot: Gene-Concept Network
+#构建含log2FC信息的genelist 
+
+BiocManager::install("cnetplot")
+deg <- read.table("diffexpr_padj_results.txt",header = T)
+go <- read.table("GO-up-down.txt",header = T,sep = '\t' )
+genelist <- as.numeric(deg[,2]) 
+names(genelist) <- row.names(deg)
+library(patchwork)
+library("cnetplot")
+cnetp1 <- cnetplot(go,  foldChange = genelist,
+                   showCategory = 6,
+                   colorEdge = T,
+                   node_label = 'all',
+                   color_category ='steelblue')
+
+cnetp2 <- cnetplot(go,  foldChange = genelist,
+                   showCategory = 6,
+                   node_label = 'gene',
+                   circular = T, 
+                   colorEdge = T)
+
+
+
+
+
+
+
