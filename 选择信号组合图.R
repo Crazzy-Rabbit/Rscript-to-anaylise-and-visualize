@@ -2,7 +2,7 @@
 library(ggplot2)
 library(RColorBrewer)
 
-# 读取选择信号结果文件，确保chr start end这三列的头文件相同，染色体号都是一种
+# 读取选择信号结果文件，确保chr start end这三列的头文件为"CHROM","BIN_START","BIN_END"，染色体号都是一种
 fst_data <- read.table("fst_chinese-other.windowed.weir.fst", header = TRUE)
 
 data2 <- read.table("ln_ratio.txt", header = TRUE)
