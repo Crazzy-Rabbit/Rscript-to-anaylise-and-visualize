@@ -10,6 +10,6 @@
 
 ##### 曼哈顿图
 ![Rectangular-Manhattan P_xpclr](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/f2734885-bee2-4de2-b172-cdcce4896896)
-
+<img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/f2734885-bee2-4de2-b172-cdcce4896896" width="50%">
      
 
