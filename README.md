@@ -7,3 +7,8 @@
 
 ##### 选择信号频数分布直方图
 ![Rplot](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/ab8ffb12-8fdc-445d-89d1-1ce4c3a20b97)
+
+##### 曼哈顿图
+<img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/8a758f08-651f-42bb-b82c-4f492ae9cd4f" width="50%")
+     
+
