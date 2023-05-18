@@ -12,10 +12,10 @@
 <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/f2734885-bee2-4de2-b172-cdcce4896896" width="50%">
 
 ##### 差异基因表达谱
-![差异前50基因热图](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/d91468e9-a4e4-46da-9642-65638ef72590)
+<img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/d91468e9-a4e4-46da-9642-65638ef72590" width="30">
 
 ##### 火山图
-![deseq](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/23d2916f-1e1a-46ef-b18a-c403aff7b548)
+<img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/23d2916f-1e1a-46ef-b18a-c403aff7b548" width="40">
 
 ##### 富集条形图
-![Rplot01](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/794dae83-71e3-41f2-9cc2-8111fc33e515)
+<img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/794dae83-71e3-41f2-9cc2-8111fc33e515" width="40">
