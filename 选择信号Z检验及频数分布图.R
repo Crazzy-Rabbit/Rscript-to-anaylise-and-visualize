@@ -1,5 +1,5 @@
 # 对选择信号进行Z检验，以判断显著性，P < 0.005
-# 设置已知的 FST 值和获得FST的区间数量 
+# 设置已知的 FST 值
 fst <- read.table("fst_chinese-other.windowed.weir.fst", sep='\t', header=TRUE)
 mean_fst <- mean(fst$WEIGHTED_FST)
 sd_fst <- sd(fst$WEIGHTED_FST)
