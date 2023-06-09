@@ -19,9 +19,8 @@ barplot(t(as.matrix(ta1)),col = rainbow(3),
 setwd("D:/桌面/毕业论文/22.09.26-牛-毕业/22.10.07-文章实验/22.10.26-群体结构/admixture")
 ###Admixture结果的可视化 
 ##=========================================
+# sort columns according to the cor
 sort.admixture <- function(admix.data){
-  ## sort columns according to the cor
-  
   k <- length(admix.data)
   n.ind <- nrow(admix.data[[1]])
   name.ind <- rownames(admix.data[[1]])
@@ -53,8 +52,6 @@ sort.admixture <- function(admix.data){
 }
 
 sort.iid <- function(k.values, groups){
-  ##k.values <- admix.values[[1]]
-  ##groups <- admix.fam
   max.col <- which.max(colSums(k.values))
   k.values <- cbind(k.values, groups[match(rownames(k.values), as.character(groups$iid)),])
   k.values <- transform(k.values, group = as.factor(k.values$fid))
@@ -88,10 +85,6 @@ read.structure <- function(file, type = "structure"){
 }
 
 add.black.line <- function(data, groups, nline = 1){
-  # data <- as.matrix(plot.data[[2]])
-  # groups <- group.name
-  # nline <- 3
-  
   data <- as.matrix(data)
   group.name <- unique(groups)
   new.data <- matrix(NA, ncol = ncol(data))
@@ -111,27 +104,22 @@ add.black.line <- function(data, groups, nline = 1){
 
 
 ##=========================================
-## 
-header <- "QC.ld.sample126.chart.filter-geno005-maf003-502502"         ######（plink格式的文件）
-max.k <- 6
+header <- "QC.2220230609_Sll-hn-232_chr26.snps_pass_genotype-geno005-maf003"
+max.k <- 8
 ##=========================================
 admix.fn <- paste(header, 2:max.k, "Q", sep = ".")
 fam.fn <- paste(header, "fam", sep = ".")
-admix.fam <- read.table(fam.fn, stringsAsFactors = F,
-                        col.names = c("fid", "iid", "pid", "mid", "sex", "pheno"))
-admix.values <- lapply(admix.fn, read.table, header = F, 
-                       row.names = as.character(admix.fam$iid))
+admix.fam <- read.table(fam.fn, stringsAsFactors = F,col.names = c("fid", "iid", "pid", "mid", "sex", "pheno"))
+admix.values <- lapply(admix.fn, read.table, header = F, row.names = as.character(admix.fam$iid))
 order.fn <- paste(header, "order.txt", sep = ".")
 admix.order <- read.table(order.fn, col.names = c("region", "iid", "fid"), stringsAsFactors = F)
 id.order <- admix.order$iid
-#id.order <- sort.iid(admix.values[[1]], admix.order)
 admix.data <- list()
 for (i in 1:length(admix.values)){
   admix.data[[i]] <- admix.values[[i]][id.order,]
 }
 
 species <- as.character(admix.order[,1])
-
 sorted.data <- sort.admixture(admix.data)
 
 ## add black line in plot
@@ -144,7 +132,6 @@ for (i in 1:length(sorted.data)){
 
 ## add xlab to plot
 plot.id.list <- rownames(plot.data[[1]])
-#plot.xlab <- admix.fam[match(x = plot.id.list, table = admix.fam$iid),]
 plot.xlab <- admix.order[match(x = plot.id.list, table = admix.order$iid),]
 
 plot.lab <- unique(plot.xlab$fid)
@@ -161,33 +148,21 @@ for (fid in plot.lab){
 ##=========================================
 ## barplot admixture and structure
 library(RColorBrewer)
-
-
-my.colours <- c(brewer.pal(8, "Dark2"), "mediumblue", "darkred", "coral4",
-                "purple3", "lawngreen", "dodgerblue1", "paleturquoise3",
-                "navyblue",  "green3", "red1", "cyan", 
-                "orange", "blue", "magenta4", "yellowgreen", "darkorange3", 
-                "grey60", "black")
-
+my.colours <- c(brewer.pal(8, "Dark2"),"#0b09c3","#f2640a","#08b052","#c00505","#0bc5ee","#7030a2","#ffff01","#c55911")   
+#brewer.pal(8, "Dark2")
 
 max.k <- length(plot.data)
 n <- dim(plot.data[[1]])[1]
-#pdf(file=paste(header, "admix.plot.pdf", sep = "."), width = 16, height = 12)
-png(file=paste(header, "admix.plot.png", sep = "."), res=300, width = 2400, height = 2000)
-par(mfrow = c(max.k,1),  mar=c(0.5,2,0,0), oma=c(6,0,1,0))
+
+png(file=paste(header, "admix.plot.png", sep = "."), res=400, width = 2400, height = 1200)
+par(mfrow = c(max.k, 1), mar=c(0.1,1,0.2,0), oma=c(4,0,0.1,0), mgp=c(0,0.1,0),xaxs="i",cex.lab=0.8, cex.axis=0.8)
 par(las=2)
-#for (i in 1:(max.k - 1)){
 
+# plot  k
 for (i in 1:max.k){
-  barplot(t(as.matrix(plot.data[[i]])), names.arg = rep(c(""), n), 
-          col = my.colours, border = NA, space = 0, axes = F, 
-          ylab = "")
-  axis(side = 2, at = 0.5, labels = as.character(i+1), tick = F, hadj = 0)
+     barplot(t(as.matrix(plot.data[[i]])), names.arg = rep(c(""), n), 
+             col = my.colours, border = NA, space = 0,axes = F, 
+             ylab = paste("K=", i+1),xaxt="n", yaxt="n")
 }
-
-
-axis(side = 1, at = plot.at, labels = plot.lab, tick = F, lty = 15, cex.axis = 1)
-#barplot(t(as.matrix(plot.data[[max.k]])), names.arg = rownames(plot.data[[1]]), axes = F,
-#        col = my.colours, border = NA, space = 0, 
-#        ylab = paste("K=", max.k + 1, sep = ""), cex.axis=0.6(坐标轴字体大小), cex.names=0.6)
+axis(side = 1, at = plot.at, labels = plot.lab, tick = F, font=1.5, cex.axis = 0.8)
 dev.off()
