@@ -48,17 +48,16 @@ Breed = a[,1]
 # only provide pc1-pc2 pc1-pc3 pc2-pc3
 if (p1=="PC1"){
   x0=a[,3] 
-}
-if (p1=="PC2"){
+}else if (p1=="PC2"){
   x0=a[,4]
 }
 
 if (p2=="PC2"){
   y0=a[,4]
-}
-if (p2=="PC3"){
+}else if (p2=="PC3"){
   y0=a[,5]
 }
+
 
 png(file=paste(p1, p2, "PCA.plot.png", sep = "."),res=400, width = 2000, height = 1550)
 p = ggplot(data  = a , aes(x = x0, y = y0,group = Breed))+
