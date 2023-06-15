@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#! /usr/bin/Rscript
 
 # Usage: Rscript 01_plot_admixture.r -i input_prefix -k maxk
 # need R packages: optparse, RColorBrewer
