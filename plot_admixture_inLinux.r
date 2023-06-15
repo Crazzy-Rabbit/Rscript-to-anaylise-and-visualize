@@ -1,10 +1,13 @@
 #!/usr/bin/Rscript
+
 # Usage: Rscript 01_plot_admixture.r -i input_prefix -k maxk
 # need R packages: optparse, RColorBrewer
-# Admixture结果可视化
+# 稍微给改了一下。最终图片应该是挺好看的了
+#Admixture结果可视化
  
 ##=========================================
 library("optparse")
+# Read in the arguments
 option_list = list(
   make_option(c("-i", "--input"), type="character", default=NULL,
               help="bam file prefix", metavar="character"),
@@ -22,6 +25,7 @@ if (is.null(opt$input)){
   print_help(opt_parser)
   stop("Please provide the maximum k value to plot", call.=FALSE)
 }
+
 
 # sort columns according to the cor
 sort.admixture <- function(admix.data){
@@ -61,7 +65,9 @@ sort.iid <- function(k.values, groups){
   k.values <- transform(k.values, group = as.factor(k.values$fid))
   k.means <- tapply(k.values[,max.col], k.values$group, mean)
   k.means <- k.means[order(k.means)]
-  k.sort <- data.frame(id = names(k.means),order = order(k.means),mean = k.means)
+  k.sort <- data.frame(id = names(k.means), 
+                       order = order(k.means),
+                       mean = k.means)
   k.values$order <- k.sort[match(as.character(k.values$group), k.sort$id), 3]
   k.values <- k.values[order(k.values$order, k.values[,max.col]),]
   return(rownames(k.values))
@@ -111,10 +117,13 @@ max.k <- opt$maxk
 ##=========================================
 admix.fn <- paste(header, 2:max.k, "Q", sep = ".")
 fam.fn <- paste(header, "fam", sep = ".")
-admix.fam <- read.table(fam.fn, stringsAsFactors = F,col.names = c("fid", "iid", "pid", "mid", "sex", "pheno"))
-admix.values <- lapply(admix.fn, read.table, header = F, row.names = as.character(admix.fam$iid))
+admix.fam <- read.table(fam.fn, stringsAsFactors = F,
+                        col.names = c("fid", "iid", "pid", "mid", "sex", "pheno"))
+admix.values <- lapply(admix.fn, read.table, header = F, 
+                       row.names = as.character(admix.fam$iid))
 order.fn <- paste(header, "order.txt", sep = ".")
-admix.order <- read.table(order.fn, stringsAsFactors = F,col.names = c("region", "iid", "fid"))
+admix.order <- read.table(order.fn, stringsAsFactors = F,
+                          col.names = c("region", "iid", "fid"))
 id.order <- admix.order$iid
 admix.data <- list()
 for (i in 1:length(admix.values)){
@@ -150,7 +159,8 @@ for (fid in plot.lab){
 ##=========================================
 ## barplot admixture and structure
 library(RColorBrewer)
-my.colours <- c(brewer.pal(8, "Dark2"),"#0b09c3","#f2640a","#08b052","#c00505","#0bc5ee","#7030a2","#ffff01","#c55911")   
+my.colours <- c("#873186", "#6BB93F","#E20593", "#18A2CA","#FFB6C1","#DBB71D", "#F37020","#3364BC", 
+                brewer.pal(8,"Dark2"),"#0b09c3","#f2640a","#08b052","#c00505","#0bc5ee","#7030a2","#ffff01","#c55911")   
 #brewer.pal(8, "Dark2")
 
 max.k <- length(plot.data)
@@ -171,12 +181,16 @@ for (fid in plot.lab){
 }
 # plot  k
 for (i in 1:max.k){
-     barplot(t(as.matrix(plot.data[[i]])), names.arg = rep(c(""), n), col = my.colours, border = NA, space = 0,axes = F, ylab = paste("K=",i+1),xaxt="n", yaxt="n")
+     barplot(t(as.matrix(plot.data[[i]])), names.arg = rep(c(""), n), 
+             col = my.colours, border = NA, space = 0,axes = F, 
+             ylab = paste("K=",i+1),xaxt="n", yaxt="n")
 # plot black line for each pop
-    for (i in 1:(length(plot.at1)-1)) {
-    x <- plot.at1[i]
-    abline(v = x, lwd =0.5,  col = "black") 
+    for (i in 0:(length(plot.at1))) {
+        x <- plot.at1[i]
+        abline(v=0, lwd=1,  col="black")
+        abline(v=x, lwd=0.7, col="black") 
   }
+        abline(h=0, lwd=0.7, col="black")     
 }
 axis(side = 1, at = plot.at, labels = plot.lab, tick = F, font=2, cex.axis = 0.6)
 dev.off()
