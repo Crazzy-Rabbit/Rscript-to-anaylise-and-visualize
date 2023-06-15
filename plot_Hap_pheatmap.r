@@ -1,5 +1,7 @@
 # 不同组之间有缝隙，更加直观
 library(pheatmap)
+library(ComplexHeatmap)
+
 group = read.table("sample_plot.list.txt", stringsAsFactors = F) ##两列，1：ID，2：品种
 names(group) <- c("ID","Group")
 rownames(group) <- group$ID
