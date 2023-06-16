@@ -202,14 +202,17 @@ for (fid in plot.lab){
 }
 # plot  k
 for (i in 1:max.k){
-     barplot(t(as.matrix(plot.data[[i]])), names.arg = rep(c(""), n), 
-             col = my.colours, border = NA, space = 0,axes = F, 
-             ylab = paste("K=",i+1),xaxt="n", yaxt="n")
-# plot black line for each pop
-    for (i in 1:(length(plot.at1)-1)) {
-    x <- plot.at1[i]
-    abline(v = x, lwd =0.5,  col = "black") 
-  }
+     barplot(t(as.matrix(plot.data[[i]])),names.arg=rep(c(""),n),col=my.colours,border=NA,space=0,axes=F,ylab=paste("K=",i+1),xaxt="n",yaxt="n",font=2)
+# plot black line for each pop in top bottom left and right
+    for (i in 0:(length(plot.at1))) {
+        x <- plot.at1[i]
+        abline(v=0, lwd=1,  col="black")
+        abline(v=x, lwd=0.7, col="black") 
+    }
+        abline(h=0, lwd=0.9, col="black") 
+        # add top and bottom border for each subplot 
+        rect(par("usr")[1], par("usr")[4] - i * nline / max.k ,
+             par("usr")[2], par("usr")[4] - (i-1) * nline / max.k , lwd = 1 )     
 }
 axis(side = 1, at = plot.at, labels = plot.lab, tick = F, font=2, cex.axis = 0.6)
 dev.off()
