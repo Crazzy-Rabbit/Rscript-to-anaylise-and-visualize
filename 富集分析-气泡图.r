@@ -1,32 +1,25 @@
 # GO气泡图
- # BiocManager::install("openxlsx")
+# BiocManager::install("openxlsx")
 
 library(ggplot2)#这个是一个非常厉害的绘图R包
 library(openxlsx)#这个包是用来导入格式为XLSX的数据的
 
 goinput <- read.xlsx("go.xlsx")#载入GO富集分析的结果文件
-
-# 设置XY轴
 x=goinput$GeneRatio#设置以哪个数据为X轴
 y=factor(goinput$Description,levels = goinput$Description)#设置Y轴
 
 # 绘制画布
 p = ggplot(goinput,aes(x,y))#开始以X轴和Y轴绘制画布
 
-#绘图，大概的意思是，又设置了除XY轴数据（Ratio，GOterm）之后又设置了三个维度的数据。
 #三个数据分别是以count为点的大小，以颜色的由嫩绿到深粉红代表P值的对数值，以点的性状代表GO类型（MF,CC,BP）
 p1 = p + geom_point(aes(size=Count,color=-0.5*log(pvalue),shape=ONTOLOGY,))+
   scale_color_gradient(low = "SpringGreen", high = "OrangeRed")
 p1
 #添加各类标签
 p2 = p1 + labs(color=expression(-log[10](pvalue)),
-               size="Count",
-               x="GeneRatio",
-               y="Go_term",
+               size="Count", x="GeneRatio", y="Go_term",
                title="Go enrichment of test Genes")
 p2
-
-
 
 
 
@@ -36,22 +29,16 @@ library(ggplot2)
 library(openxlsx)
 
 kegginput <- read.xlsx("kegg.xlsx")
-
-# 设置XY轴
 x=kegginput$pvalue
 y=factor(kegginput$Term,levels = kegginput$Term)
 
 # 绘制画布
-p = ggplot(kegginput,aes(x,y))#开始以X轴和Y轴绘制画布
-
+p = ggplot(kegginput,aes(x,y))
 p1 = p + geom_point(aes(size=Count,color=-0.5*log(pvalue)))+
-  scale_color_gradient(low = "BLUE", high = "OrangeRed")
-
+         scale_color_gradient(low = "BLUE", high = "OrangeRed")
 #添加各类标签
 p2 = p1 + labs(color=expression(-log[10](pvalue)),
-               size="Count",
-               x="P value",
-               y="KEGG",
+               size="Count", x="P value", y="KEGG",
                title="KEGG pathway of Target Genes")
 p2
 
