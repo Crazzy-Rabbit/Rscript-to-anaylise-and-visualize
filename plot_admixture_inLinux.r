@@ -190,7 +190,10 @@ for (i in 1:max.k){
         abline(v=0, lwd=1,  col="black")
         abline(v=x, lwd=0.7, col="black") 
   }
-        abline(h=0, lwd=0.7, col="black")     
+        abline(h=0, lwd=0.9, col="black") 
+        # add top and bottom border for each subplot 
+        rect(par("usr")[1], par("usr")[4] - i * nline / max.k ,
+             par("usr")[2], par("usr")[4] - (i-1) * nline / max.k , lwd = 1 )     
 }
 axis(side = 1, at = plot.at, labels = plot.lab, tick = F, font=2, cex.axis = 0.6)
 dev.off()
