@@ -3,10 +3,8 @@ library(ComplexHeatmap)
 
 # setwd("D:/生信/夜雨声烦/硕士/毕业论文/22.09.26-牛-毕业/22.10.07-文章实验/22.11.17-gene单倍型/单倍型图")
 
-group = read.table("sample_plot.list.txt", stringsAsFactors = F) ##两列，1：ID，2：品种
-names(group) <- c("ID","GroupClass")
-rownames(group) <- group$ID
-group$ID <- NULL
+group = read.table("sample_plot.list.txt", row.names=1, stringsAsFactors = F) # 两列，1：ID，2：品种,ID与txt文件顺序一致
+names(group) <- c("GroupClass")
 
 new_order <- c("JPBC", "Mongolian", "Kazakh", "Yanbian") # 新的组顺序
 group$GroupClass <- factor(group$GroupClass, levels = new_order)
