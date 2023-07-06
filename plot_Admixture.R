@@ -13,38 +13,13 @@ barplot(t(as.matrix(ta1)),col = rainbow(3),
 
 
 
-###全部K值群体的可视化
-# install.packages("pheatmap")
-
-setwd("D:/桌面/毕业论文/22.09.26-牛-毕业/22.10.07-文章实验/22.10.26-群体结构/admixture")
-#!/usr/bin/Rscript
-
-# Usage: Rscript 01_plot_admixture.r -i input_prefix -k maxk
-# need R packages: optparse, RColorBrewer
-# 稍微给改了一下。最终图片应该是挺好看的了
 #Admixture结果可视化
- 
+###全部K值群体的可视化
+
+
+#setwd("D:/桌面/毕业论文/22.09.26-牛-毕业/22.10.07-文章实验/22.10.26-群体结构/admixture")
+###Admixture结果的可视化 
 ##=========================================
-library("optparse")
-# Read in the arguments
-option_list = list(
-  make_option(c("-i", "--input"), type="character", default=NULL,
-              help="bam file prefix", metavar="character"),
-  make_option(c("-k", "--maxk"), type="integer", default=NULL,
-              help="maximum k value", metavar="integer")
-)
-opt_parser = OptionParser(option_list=option_list)
-opt = parse_args(opt_parser)
-
-# Check that all required arguments are provided
-if (is.null(opt$input)){
-  print_help(opt_parser)
-  stop("Please provide the input prefix", call.=FALSE)
-}else if (is.null(opt$maxk)){
-  print_help(opt_parser)
-  stop("Please provide the maximum k value to plot", call.=FALSE)
-}
-
 
 # sort columns according to the cor
 sort.admixture <- function(admix.data){
@@ -84,9 +59,7 @@ sort.iid <- function(k.values, groups){
   k.values <- transform(k.values, group = as.factor(k.values$fid))
   k.means <- tapply(k.values[,max.col], k.values$group, mean)
   k.means <- k.means[order(k.means)]
-  k.sort <- data.frame(id = names(k.means), 
-                       order = order(k.means),
-                       mean = k.means)
+  k.sort <- data.frame(id = names(k.means), order = order(k.means),mean = k.means)
   k.values$order <- k.sort[match(as.character(k.values$group), k.sort$id), 3]
   k.values <- k.values[order(k.values$order, k.values[,max.col]),]
   return(rownames(k.values))
@@ -131,18 +104,15 @@ add.black.line <- function(data, groups, nline = 1){
 
 
 ##=========================================
-header <- opt$input
-max.k <- opt$maxk
+header <- "QC.67_admix-geno005-maf003-ld502502"
+max.k <- 12
 ##=========================================
 admix.fn <- paste(header, 2:max.k, "Q", sep = ".")
 fam.fn <- paste(header, "fam", sep = ".")
-admix.fam <- read.table(fam.fn, stringsAsFactors = F,
-                        col.names = c("fid", "iid", "pid", "mid", "sex", "pheno"))
-admix.values <- lapply(admix.fn, read.table, header = F, 
-                       row.names = as.character(admix.fam$iid))
+admix.fam <- read.table(fam.fn, stringsAsFactors = F,col.names = c("fid", "iid", "pid", "mid", "sex", "pheno"))
+admix.values <- lapply(admix.fn, read.table, header = F, row.names = as.character(admix.fam$iid))
 order.fn <- paste(header, "order.txt", sep = ".")
-admix.order <- read.table(order.fn, stringsAsFactors = F,
-                          col.names = c("region", "iid", "fid"))
+admix.order <- read.table(order.fn, stringsAsFactors = F,col.names = c("region", "iid", "fid"))
 id.order <- admix.order$iid
 admix.data <- list()
 for (i in 1:length(admix.values)){
@@ -178,27 +148,26 @@ for (fid in plot.lab){
 ##=========================================
 ## barplot admixture and structure
 library(RColorBrewer)
-my.colours <- c(brewer.pal(8, "Dark2"),
-                "#0b09c3","#f2640a","#08b052",
-                "#c00505","#0bc5ee","#7030a2",
-                "#ffff01","#c55911")   
+my.colours <- c("#873186", "#6BB93F","#E20593", "#18A2CA","#FFB6C1","#DBB71D", "#F37020","#3364BC", 
+                brewer.pal(8,"Dark2"),"#0b09c3","#f2640a","#08b052","#c00505","#0bc5ee","#7030a2","#ffff01","#c55911")   
 #brewer.pal(8, "Dark2")
-
+# "#873186", "#E20593",  "#6BB93F", "#18A2CA"
+# "#3364BC", "#000000", "#F37020", "#DBB71D"
 max.k <- length(plot.data)
 n <- dim(plot.data[[1]])[1]
 
-png(file=paste(header, "admix.plot.png", sep = "."),res=400, width = 2000, height = 1200)
-par(mfrow = c(max.k, 1), mar=c(0,0.7,0,0),oma=c(3.5,0,0.1,0.1), mgp=c(0,0.2,0),xaxs="i",cex.lab=0.6,  font.lab=2, cex.axis=0.8)
+png(file=paste(header,"admix.plot.png",sep="."),res=400, width=2000, height=1200)
+par(mfrow = c(max.k, 1),mar=c(0.1,0.7,0,0),oma=c(3.5,0,0.1,0.1), mgp=c(0,0.2,0),xaxs="i",cex.lab=0.6,font.lab=2,cex.axis=0.8)
 par(las=2)
 
 # define black line locate in where
 plot.at1 <- c()
 start <- 0
 for (fid in plot.lab){
-  xlen <- length(which(plot.xlab$fid == fid))
+  xlen <- length(which(plot.xlab$fid==fid))
   gap <- start + floor(xlen)
   plot.at1 <- c(plot.at1, gap)
-  start <- start + nline + xlen
+  start <- start+nline+xlen
 }
 # plot  k
 for (i in 1:max.k){
@@ -212,7 +181,11 @@ for (i in 1:max.k){
         abline(h=0, lwd=0.9, col="black") 
         # add top and bottom border for each subplot 
         rect(par("usr")[1], par("usr")[4] - i * nline / max.k ,
-             par("usr")[2], par("usr")[4] - (i-1) * nline / max.k , lwd = 1 )     
+             par("usr")[2], par("usr")[4] - (i-1) * nline / max.k , lwd = 1 )
+      
 }
+axis(side=1,at=plot.at,labels=plot.lab,tick=F,font=2,cex.axis=0.6)
+dev.off()
+
 axis(side = 1, at = plot.at, labels = plot.lab, tick = F, font=2, cex.axis = 0.6)
 dev.off()
