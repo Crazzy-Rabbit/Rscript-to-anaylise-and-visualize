@@ -3,19 +3,17 @@ library(ggplot2)
 library(RColorBrewer)
 
 # 读取选择信号结果文件，确保chr start end这三列的头文件为"CHROM","BIN_START","BIN_END"，染色体号都是一种
-fst_data <- read.table("fst_chinese-other.windowed.weir.fst", header = TRUE)
-
-data2 <- read.table("ln_ratio.txt", header = TRUE)
-
+data1 <- read.table("fst_chinese-other.windowed.weir.fst", header = TRUE)
+data2 <- read.table("ln_ratio.txt", sep='\t', header = TRUE)
 data3 <- read.table("chinese_other.NC.xpclr", sep='\t', header = TRUE)
 
 # 只保留FST和PI值区间相同的记录
 # 两个画图时
-# merged_data <- merge(fst_data, data2, 
+# merged_data <- merge(data1, data2, 
 #                     by=c("CHROM","BIN_START","BIN_END"))
 
 # 3个画图时
-merged_data <- merge(merge(fst_data, data2, 
+merged_data <- merge(merge(data1, data2, 
                            by=c("CHROM","BIN_START","BIN_END")), 
                      data3, by=c("CHROM","BIN_START","BIN_END"))
 
