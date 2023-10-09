@@ -77,4 +77,8 @@ library(ggbreak)
 scale_y_break(c(100000,250000), space=0.2, scales=1, expand=c(0,0)) # 设置Y轴（100000，250000）位置截断，scales调整截断后比例
 scale_x_break(c(100000,250000), space=0.2, scales=1, expand=c(0,0)) # X轴同理
 ```
+#### 数据分组
+```
+facet_wrap(~gene)    # 比如这里对gene列进行分组可视化，放在一个图中
+```
 
