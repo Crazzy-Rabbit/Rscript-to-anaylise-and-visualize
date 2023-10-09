@@ -39,17 +39,14 @@ venn.diagram(  x = list(SE,RI,MXE,A5SS,A3SS),
   category.names = c("SE","RI","MXE","A5SS","A3SS"),
  filename = 'venn.png',
  output=TRUE,
-  # 圈 
-  lwd = 1,  # 圈线条粗细 1 2 3 4 5
-  lty =1,  # 线条类型, 1 实线, 2 虚线, blank 无线条
-  col = c('red', 'blue', 'green', 'orange','purple'), # 线条色, 
-  fill = c('red', 'blue', 'green', 'orange','purple'), # 填充色
-  #数字
-  cex = 0.8,  # 数字大小
-  # 标签 category
-  cat.cex = 1,  # 字体大小
-  fontface = "bold",  # 加粗
-  cat.col = c('red', 'blue', 'green', 'orange','purple')  # 字体色, 
+  lwd = 1,
+  lty =1,
+  col = c('red', 'blue', 'green', 'orange','purple'),
+  fill = c('red', 'blue', 'green', 'orange','purple'),
+  cex = 0.8,
+  cat.cex = 1, 
+  fontface = "bold",
+  cat.col = c('red', 'blue', 'green', 'orange','purple')
 ) 
 
 
@@ -61,17 +58,16 @@ rm(list=ls())
 options(stringsAsFactors = F)  
 library(tidyverse) 
 # ggplot2 stringer dplyr tidyr readr purrr  tibble forcats 
-library(data.table) #可多核读取文件 
-a1 <- fread('all.featurecounts.txt', header = T, data.table = F)#载入counts，第一列设置为列名 
+library(data.table)
+a1 <- fread('all.featurecounts.txt', header = T, data.table = F)
 ### counts矩阵的构建 
 counts <- a1[,7:ncol(a1)] 
-#截取样本基因表达量的counts部分作为counts  
-rownames(counts) <- a1$Geneid #将基因名作为行名 
+rownames(counts) <- a1$Geneid
+
 ### 从featurecounts 原始输出文件counts.txt中提取Geneid、Length(转录本长度)， 
 geneid_efflen <- subset(a1,select = c("Geneid","Length"))        
 colnames(geneid_efflen) <- c("geneid","efflen")   
-geneid_efflen_fc <- geneid_efflen #用于之后比较 
-### 取出counts中geneid的对应的efflen 
+geneid_efflen_fc <- geneid_efflen
 dim(geneid_efflen) 
 efflen <- geneid_efflen[match(rownames(counts),                               
                               geneid_efflen$geneid),"efflen"] 
@@ -100,7 +96,6 @@ TPM <- TPM[rowSums(TPM)>1,] # 去除全部为0的列
 colSums(TPM)
 
 ###########################    Spearman相关性分析 使用TPM值  ################################
-#  R语言里自带的相关性分析的函数是cor()，默认的皮尔逊相关性分析,
 sp.data<- cor(TPM, method = "spearman")
 # 图展示
 library(corrplot)
@@ -118,27 +113,26 @@ chart.Correlation(sp.data,histogram = T,pch=19)
 ###################### PCA  使用TPM值 ############################
 data <- t(TPM)
 data.pca <- prcomp(data, scale. = T)  #对数据标准化后做PCA，这是后续作图的文件 
-summary(data.pca)  # 查看结果文件
-#输出特征向量 
+summary(data.pca)
+
 write.table(data.pca$rotation, file="PC.xls", quote=F, sep = "\t") 
-#输出新表 
+
 write.table(predict(data.pca), file="newTab.xls", quote=F, sep = "\t") 
-#输出PC比重 
+
 pca.sum=summary(data.pca) 
 write.table(pca.sum$importance, file="importance.xls", quote=F, sep = "\t") 
-## 画图
+
 library(factoextra)
-# 设置分组：
-group=c("M_Han",rep("M_DP",3),rep("L_Han",3),"L_DP","M_Han","M_Han","L_DP","L_DP")     ## 样本
+group=c("M_Han",rep("M_DP",3),rep("L_Han",3),"L_DP","M_Han","M_Han","L_DP","L_DP")
 fviz_pca_ind(data.pca, col.ind=group, 
-             mean.point=F,  # 去除分组的中心点
-             label = "none", # 隐藏样本标签
-             addEllipses = T, # 添加边界线
+             mean.point=F,
+             label = "none",
+             addEllipses = T,
              legend.title="Groups",
-               ellipse.type="confidence", # 绘制置信椭圆 
+               ellipse.type="confidence", 
               ellipse.level=0.9,
-             palette = c("#CC3333", "#339999",'red','blue'))+  #Cell配色哦 
-  theme(panel.border = element_rect(fill=NA,color="black", size=1, linetype="solid"))#加个边框
+             palette = c("#CC3333", "#339999",'red','blue'))+
+  theme(panel.border = element_rect(fill=NA,color="black", size=1, linetype="solid"))
 
 
 
@@ -154,13 +148,13 @@ head(countdata)
 ##  过滤featurecounts后，每个样本计数小于等于10的！！！！！！！
 countdata.filter<-countdata[rowSums(countdata)>=1&apply(countdata,1,function(x){all(x>=10)}),]
 head(countdata.filter) 
-dim(countdata.filter) # 查看数据维度，即几行几列
+dim(countdata.filter)
 
 #####################  dds矩阵的创建 ####################
 library(DESeq2)
-condition <- factor(c(rep("Zebu",5),rep("Holstein",5))) # 赋值因子，即变量
-coldata <- data.frame(row.names=colnames(countdata.filter), condition) # 创建一个condition数据框
-dds <- DESeqDataSetFromMatrix(countData=countdata.filter, colData=coldata, design=~condition) ##构建dds矩阵(后面很多分析都是基于这个dds矩阵)
+condition <- factor(c(rep("Zebu",5),rep("Holstein",5)))
+coldata <- data.frame(row.names=colnames(countdata.filter), condition)
+dds <- DESeqDataSetFromMatrix(countData=countdata.filter, colData=coldata, design=~condition)
 
 
 ###############  PCA分析 使用对dds矩阵处理后的vst或rld值#################### 
@@ -210,30 +204,24 @@ ggplot(resdata,aes(x=log2FoldChange,y=-log10(padj))) +
 geom_hline(yintercept = -log10(0.05),linetype = "dashed",color = "#999999")+
 ##纵向垂直参考线，差异倍数--foldchange
 geom_vline(xintercept = c(-1 , 1),linetype = "dashed", color = "#999999")+
-##散点图
+
 geom_point(aes(size = -log10(padj),color = -log10(padj))) +
-##指定颜色渐变模式
 scale_color_gradientn(values = seq(0,1,0.2),
                        colors = c("#39489f","#39bbec","#f9ed36","#f38466","#b81f25"))+
-##指定散点渐变模式
 scale_size_continuous(range = c(0,3))+
   
-##主题调整
 ###  theme_grey()为默认主题，theme_bw()为白色背景主题，theme_classic()为经典主题
 theme_bw()+
-##调整主题和图例位置
-theme(panel.grid.major = element_blank(), #删除主网格线
-        panel.grid.minor = element_blank(), #删除次网格线
-        legend.position = c(0.08,0.9),      #设置图例位置
+theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = c(0.08,0.9),
         legend.justification = c(0,1))+
-##设置部分图例不显示
 guides(col = guide_colourbar(title = "-Log10_q-value"),
          size = "none")+
-##添加标签
+
 geom_text(aes(label=c(label),color = -log10(padj)), size = 3, vjust = 1.5, hjust = 1)+
-##修改坐标轴
+
 xlab("Log2FC")+ylab("-Log10(FDR q-value)") 
-##保存图片
 ggsave("vocanol_plot.pdf", height = 9 , width = 10)
   
 
