@@ -7,7 +7,9 @@ geom_boxplot     #箱型图
 geom_jitter      #抖动点
 geom_violin      #小提琴图
 geom_density     #密度图
-geom_histogram   #直方图
+geom_histogram        #直方图
+geom_density_ridges   #山脊图
+
 ```
 散点图
 ```
