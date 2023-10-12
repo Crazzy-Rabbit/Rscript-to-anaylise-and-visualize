@@ -10,13 +10,13 @@ library(RColorBrewer)
 #作图
 p = ggplot(a,aes(x=Breed,y=length,fill=Breed))+  
     geom_boxplot()+ # ylim(0,0.02) +
-    theme_bw()+ # 去除灰色背景
+    theme_bw()+
     theme(panel.border = element_rect(fill=NA,color="black", 
-                                    size=0.5, linetype ="solid")) #添加边框
+                                    size=0.5, linetype ="solid"))
 
 
 p + labs(x="Breed",y = "Length of ROH per individual(Mb)")+ 
-        # theme(axis.text.x = element_blank()) + ## 去除坐标轴刻度标签\
+        theme(axis.text.x = element_blank()) + 
         theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1)) +
         theme(legend.position = 'none')#去除图例
 
