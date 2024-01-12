@@ -2,7 +2,7 @@
 一些用于画图的R脚本
 
 ##### 采样地图
-<img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/e1299695-09e1-46c3-8436-6a3bf1e64fb1" width="40%">
+<img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/e1299695-09e1-46c3-8436-6a3bf1e64fb1" width="60%">
 
 ##### 选择信号组合图
 <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/16b24800-e7d9-4c13-be1a-412f31caa22e" width="40%">
