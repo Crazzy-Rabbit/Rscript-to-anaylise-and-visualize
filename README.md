@@ -4,13 +4,13 @@
 ### 别偷偷看啊喂，顺手点个赞
 - NEXT
   - R的数据分析、算法等
-- [X] [采样地图](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/plot_采样地图.R)
+- [X] [采样地图](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/blob/main/plot_采样地图.R)
     - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/e1299695-09e1-46c3-8436-6a3bf1e64fb1" width="80%">
 
-- [x] [选择信号组合图](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/plot_选择信号组合图.R)
+- [x] [选择信号组合图](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/blob/main/plot_选择信号组合图.R)
     - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/16b24800-e7d9-4c13-be1a-412f31caa22e" width="40%">
 
-- [X] [选择信号频数分布直方图](plot_selection-Ztest-histplot.R)
+- [X] [选择信号频数分布直方图](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/blob/main/plot_selection-Ztest-histplot.R)
     - [X] ![Rplot](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/ab8ffb12-8fdc-445d-89d1-1ce4c3a20b97)
 
 - [X] 曼哈顿图
