@@ -34,3 +34,7 @@
         - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/677b02b6-2c20-4870-be23-ab4d2f05f01e" width="100%">
 - [x] CMplot_circos
     - [x] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/e0363405-2186-4a9f-b1ba-18e90ae5b42d" width="100%">
+
+- [x] 堆叠图-条形
+    - [x] ![SNPindel分布](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/3bbe0878-68cc-4466-baf1-f5fedc9e9aec)
+ 
