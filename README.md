@@ -20,7 +20,7 @@
 
 
     - [X] 2.plot_Manhattan.py画的
-        - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/2ca8944a-b9fc-4160-aea4-a49a929338e9" width="70%">
+        - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/2ca8944a-b9fc-4160-aea4-a49a929338e9" width="100%">
         
 - [X] 差异基因表达谱
     - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/d91468e9-a4e4-46da-9642-65638ef72590" width="40%">
@@ -37,4 +37,14 @@
 
 - [x] 堆叠图-条形
     - [x] ![SNPindel分布](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/3bbe0878-68cc-4466-baf1-f5fedc9e9aec)
- 
+
+- [x] PCA
+    - [X] ![PCA1](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/710b2efb-4390-43e1-8b62-8817791ad38e)
+- [X] ADMIXTURE
+    - [X] ![1 6_CV](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/af3829ba-48ae-4122-b481-ff4e45c419ee)
+    - [X] ![1 7_6admixture](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/27852037-9b8a-4c4d-b843-1f1edbb7fb4a)
+
+
+
+  
+
