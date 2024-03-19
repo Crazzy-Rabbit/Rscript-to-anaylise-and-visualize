@@ -16,6 +16,8 @@
 - [X] 曼哈顿图
     - [X] 1.R中CMplot画的
         - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/f2734885-bee2-4de2-b172-cdcce4896896" width="50%">
+        - [x] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/df83ac64-9fff-4e4a-8f01-ab8dce9ada3c" width="50%">
+
 
     - [X] 2.plot_Manhattan.py画的
         - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/2ca8944a-b9fc-4160-aea4-a49a929338e9" width="70%">
@@ -28,3 +30,7 @@
 
 - [X] 富集条形图
     - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/794dae83-71e3-41f2-9cc2-8111fc33e515" width="50%">
+    - [x] 个性化一点
+        - [X] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/677b02b6-2c20-4870-be23-ab4d2f05f01e" width="50%">
+- [x] CMplot_circos
+    - [x] <img src="https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/e0363405-2186-4a9f-b1ba-18e90ae5b42d" width="50%">
