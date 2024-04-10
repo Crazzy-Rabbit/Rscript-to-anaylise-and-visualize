@@ -1,0 +1,2340 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>什么是正则表达式 &#8212; My R Learning Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/R语言学习3-语法函数3-正则表达式-stringr包';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My R Learning Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/R语言学习3-语法函数3-正则表达式-stringr包.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/R语言学习3-语法函数3-正则表达式-stringr包.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>什么是正则表达式</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">什么是正则表达式</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">字符串基础</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str-length">1 字符串长度<code class="docutils literal notranslate"><span class="pre">str_length()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str-c">2 字符串组合<code class="docutils literal notranslate"><span class="pre">str_c()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str-sub">3 字符串取子集<code class="docutils literal notranslate"><span class="pre">str_sub()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">使用正则表达式进行模式匹配</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str-view">1 基础匹配<code class="docutils literal notranslate"><span class="pre">str_view()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2 锚点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3 字符类与字符选项</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4 重复</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5 分组与回溯引用</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">6 大小写敏感</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">解决实际问题</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1 确定一个字符向量是否匹配一种模式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2 确定匹配的位置</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3 提取匹配的内容</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">4 替换匹配内容</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">5 拆分字符串</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">进阶部分</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#look-ahead">1 <code class="docutils literal notranslate"><span class="pre">look</span> <span class="pre">ahead</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#look-behind">2 <code class="docutils literal notranslate"><span class="pre">look</span> <span class="pre">behind</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">案例分析</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">案例1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">案例2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">案例3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">案例4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">案例5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">案例6</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">案例7</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">案例8</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">stringr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>── <span class=" -Color -Color-Bold">Attaching core tidyverse packages</span> ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">dplyr    </span> 1.1.4     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">readr    </span> 2.1.5
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">forcats  </span> 1.0.0     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">stringr  </span> 1.5.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">ggplot2  </span> 3.5.0     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">tibble   </span> 3.2.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">lubridate</span> 1.9.3     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">tidyr    </span> 1.3.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">purrr    </span> 1.0.2     
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>── <span class=" -Color -Color-Bold">Conflicts</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<span class=" -Color -Color-Red">✖</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">filter()</span> masks <span class=" -Color -Color-Blue">stats</span>::filter()
+<span class=" -Color -Color-Red">✖</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">lag()</span>    masks <span class=" -Color -Color-Blue">stats</span>::lag()
+<span class=" -Color -Color-Cyan">ℹ</span> Use the conflicted package (<span class=" -Color -Color-Blue">&lt;http://conflicted.r-lib.org/&gt;</span>) to force all conflicts to become errors
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id1">
+<h1>什么是正则表达式<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>我们在word文档或者excel中，经常使用查找和替换, 然而有些情况，word是解决不了的，比如</p>
+<ul class="simple">
+<li><p>条件搜索</p>
+<ul>
+<li><p>统计文中，前面有 “<code class="docutils literal notranslate"><span class="pre">data</span></code>”, “<code class="docutils literal notranslate"><span class="pre">computer</span></code>” or “<code class="docutils literal notranslate"><span class="pre">statistical</span></code>” 的 “<code class="docutils literal notranslate"><span class="pre">analysis</span></code>”，这个单词的个数</p></li>
+<li><p>找出文中重复的单词，比如“we love love you”</p></li>
+</ul>
+</li>
+<li><p>拼写检查</p>
+<ul>
+<li><p>电话号码（邮件，密码等）是否正确格式</p></li>
+<li><p>日期书写的规范与统一</p></li>
+</ul>
+</li>
+<li><p>提取信息</p>
+<ul>
+<li><p>提取文本特定位置的数据</p></li>
+</ul>
+</li>
+<li><p>文本挖掘</p>
+<ul>
+<li><p>非结构化的提取成结构化</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>这个时候就需要用到<strong>正则表达式</strong>（<code class="docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">Expression</span></code>），这一强大、便捷、高效的文本处理工具。那么，什么是正则表达式呢？简单点说，正则表达式是处理字符串的。</p></li>
+<li><p>复杂点说，正则表达式描述了一种字符串匹配的模式（<code class="docutils literal notranslate"><span class="pre">pattern</span></code>），通常被用来检索、替换那些符合某个模式(规则)的文本。这种固定的格式的文本，生活中常见的有电话号码、网络地址、邮件地址和日期格式等等。</p></li>
+<li><p>正则表达式并不是R语言特有的，事实上，几乎所有程序语言都支持正则表达式 (e.g. Perl, Python, Java, Ruby, etc).</p></li>
+<li><p>R 语言中很多函数都需要使用正则表达式，然而正则表达式不太好学。幸运的是，大神<code class="docutils literal notranslate"><span class="pre">Hadley</span> <span class="pre">Wickham</span></code>开发的<code class="docutils literal notranslate"><span class="pre">stringr</span></code>包让正则表达式简单易懂</p></li>
+</ul>
+</section>
+<section id="id2">
+<h1>字符串基础<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<section id="str-length">
+<h2>1 字符串长度<code class="docutils literal notranslate"><span class="pre">str_length()</span></code><a class="headerlink" href="#str-length" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>获取字符串的长度,</p>
+<ul>
+<li><p>对于字符串向量，也适用</p></li>
+<li><p>数据框里配合<code class="docutils literal notranslate"><span class="pre">dplyr</span></code>函数，同样很方便</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str_length</span><span class="p">(</span><span class="s">&quot;R for data science&quot;</span><span class="p">)</span>
+<span class="nf">str_length</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;R for data science&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">18</div><div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>1</li><li>18</li><li>&lt;NA&gt;</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 数据框里配合dplyr函数</span>
+<span class="nf">data.frame</span><span class="p">(</span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;R for data science&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_length</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 3 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>y</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>a                 </td><td> 1</td></tr>
+	<tr><td>R for data science</td><td>18</td></tr>
+	<tr><td>NA                </td><td>NA</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="str-c">
+<h2>2 字符串组合<code class="docutils literal notranslate"><span class="pre">str_c()</span></code><a class="headerlink" href="#str-c" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>把字符串拼接在一起</p>
+<ul>
+<li><p>可以设置中间的间隔——分隔符</p></li>
+<li><p>可以用在数据框中</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">collapse</span></code>选项，是先组合，然后加上分隔符转换成单个字符串</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sep</span></code>是对组合设置分隔符</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str_c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">)</span>
+<span class="nf">str_c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
+<span class="nf">str_c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
+<span class="c1"># 说明c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)代表一个元素</span>
+<span class="nf">str_c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;z&quot;</span><span class="p">),</span><span class="w">  </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'xy'</div><div class="output text_html">'x, y'</div><div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'x'</li><li>'y'</li><li>'z'</li></ol>
+</div><div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'x, x'</li><li>'y, y'</li><li>'z, z'</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 用在数据框</span>
+<span class="nf">data.frame</span><span class="p">(</span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;I&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;love&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;you&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;you&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;like&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;me&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_c</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot; | &quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 3 × 3</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>y</th><th scope=col>z</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>I   </td><td>you </td><td>I | you    </td></tr>
+	<tr><td>love</td><td>like</td><td>love | like</td></tr>
+	<tr><td>you </td><td>me  </td><td>you | me   </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># collapse选项, 先组合，后转换成单个字符串</span>
+<span class="nf">str_c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="s">&quot;z&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot; | &quot;</span><span class="p">)</span>
+<span class="nf">str_c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="s">&quot;z&quot;</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="s">&quot;c&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot; | &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'x | a'</li><li>'y | b'</li><li>'z | c'</li></ol>
+</div><div class="output text_html">'xa | yb | zc'</div></div>
+</div>
+</section>
+<section id="str-sub">
+<h2>3 字符串取子集<code class="docutils literal notranslate"><span class="pre">str_sub()</span></code><a class="headerlink" href="#str-sub" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>截取字符串的一部分，需要指定截取的开始位置和结束位置</p></li>
+<li><p>开始位置和结束位置如果是负整数，就表示位置是从后往前数</p></li>
+<li><p>也可以进行赋值，如果该位置上有字符，就用新的字符替换旧的字符</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Apple&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Banana&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Pear&quot;</span><span class="p">)</span>
+<span class="nf">str_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span>
+<span class="nf">str_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">-3</span><span class="p">,</span><span class="w"> </span><span class="m">-2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'pp'</li><li>'an'</li><li>'ea'</li></ol>
+</div><div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'pl'</li><li>'an'</li><li>'ea'</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">)</span>
+<span class="nf">str_sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Q&quot;</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'A'</li><li>'B'</li><li>'P'</li></ol>
+</div><div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'Qpple'</li><li>'Qanana'</li><li>'Qear'</li></ol>
+</div></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h1>使用正则表达式进行模式匹配<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<section id="str-view">
+<h2>1 基础匹配<code class="docutils literal notranslate"><span class="pre">str_view()</span></code><a class="headerlink" href="#str-view" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>查看<code class="docutils literal notranslate"><span class="pre">string</span></code>是否匹配<code class="docutils literal notranslate"><span class="pre">pattern</span></code>，如果匹配，就高亮显示</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.</span></code>代表任意字符，表达本身则需转义字符<code class="docutils literal notranslate"><span class="pre">\\.</span></code></p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>2 锚点<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">^a</span></code> a是字符串的开始进行匹配</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a$</span></code> a是字符串的结尾进行匹配</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>3 字符类与字符选项<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>前面提到，.匹配任意字符，事实上还有很多这种特殊含义的字符：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">\d</span></code>: matches any digit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\D</span></code>: matches any except digit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\s</span></code>: matches any whitespace (e.g. space, tab, newline).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[abc]</span></code>: matches a, b, or c.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[^abc]</span></code>: matches anything except a, b, or c.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>4 重复<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>控制匹配次数</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">?</span></code>: 0 or 1</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>: 1 or more</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*</span></code>: 0 or more</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{n}</span></code>: exactly n</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{n,}</span></code>: n or more</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{,m}</span></code>: at most m</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{n,m}</span></code>: between n and m</p></li>
+</ul>
+</li>
+<li><p>默认的情况，<code class="docutils literal notranslate"><span class="pre">*</span></code>,<code class="docutils literal notranslate"> <span class="pre">+</span></code> 匹配都是贪婪的，也就是它会尽可能的匹配更多</p></li>
+<li><p>如果想让它不贪婪，而是变得懒惰起来，可以在<code class="docutils literal notranslate"><span class="pre">*</span></code>,<code class="docutils literal notranslate"> <span class="pre">+</span></code> 加个<code class="docutils literal notranslate"><span class="pre">?</span></code></p></li>
+</ul>
+<p><img alt="image.png" src="../_images/regex_repeat.jpg" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;banana&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pear&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;an&quot;</span><span class="p">)</span>
+<span class="c1"># 有时候，我们希望在字符a前后都有字符</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.a.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2] │ b<span class=" -Color -Color-Cyan">&lt;an&gt;&lt;an&gt;</span>a
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2] │ <span class=" -Color -Color-Cyan">&lt;ban&gt;</span>ana
+[3] │ p<span class=" -Color -Color-Cyan">&lt;ear&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;banana&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pear&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;^a&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a$&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;^apple$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ <span class=" -Color -Color-Cyan">&lt;a&gt;</span>pple
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2] │ banan<span class=" -Color -Color-Cyan">&lt;a&gt;</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ <span class=" -Color -Color-Cyan">&lt;apple&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 字符类与字符选项</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;grey&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;gray&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;gr[ea]y&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ <span class=" -Color -Color-Cyan">&lt;grey&gt;</span>
+[2] │ <span class=" -Color -Color-Cyan">&lt;gray&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 控制匹配次数</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Roman numerals: MDCCCLXXXVIII&quot;</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CC?&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X+&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;C{2,}&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;C{2,3}&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ Roman numerals: MD<span class=" -Color -Color-Cyan">&lt;CC&gt;&lt;C&gt;</span>LXXXVIII
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ Roman numerals: MDCCCL<span class=" -Color -Color-Cyan">&lt;XXX&gt;</span>VIII
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ Roman numerals: MD<span class=" -Color -Color-Cyan">&lt;CCC&gt;</span>LXXXVIII
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ Roman numerals: MD<span class=" -Color -Color-Cyan">&lt;CCC&gt;</span>LXXXVIII
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 控制匹配次数</span>
+<span class="c1"># 让* + 变得不贪婪</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Roman numerals: MDCCCLXXXVIII&quot;</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CLX+&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CLX+?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ Roman numerals: MDCC<span class=" -Color -Color-Cyan">&lt;CLXXX&gt;</span>VIII
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ Roman numerals: MDCC<span class=" -Color -Color-Cyan">&lt;CLX&gt;</span>XXVIII
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h2>5 分组与回溯引用<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.</span></code> 是匹配任何字符</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(.)</span></code> 将匹配项括起来，它就用了一个名字，叫<code class="docutils literal notranslate"><span class="pre">\\1</span></code>； 如果有两个括号，就叫<code class="docutils literal notranslate"><span class="pre">\\1</span></code>和<code class="docutils literal notranslate"><span class="pre">\\2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">\\1</span></code> 表示回溯引用，表示引用<code class="docutils literal notranslate"><span class="pre">\\1</span></code>对于的<code class="docutils literal notranslate"><span class="pre">(.)</span></code></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">(.)\\1</span></code>的意思就是，匹配到了字符，后面还希望有个同样的字符</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ft</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fruit</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="m">10</span><span class="p">)</span>
+<span class="n">ft</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'apple'</li><li>'apricot'</li><li>'avocado'</li><li>'banana'</li><li>'bell pepper'</li><li>'bilberry'</li><li>'blackberry'</li><li>'blackcurrant'</li><li>'blood orange'</li><li>'blueberry'</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 我们想看看这些单词里，有哪些字母是重复两次的，比如aa, pp. </span>
+<span class="c1"># 如果用上面学的方法</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">ft</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.{2}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1"># 发现和我们的预想不一样。</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">ft</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(.)\\1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> [1] │ <span class=" -Color -Color-Cyan">&lt;ap&gt;&lt;pl&gt;</span>e
+ [2] │ <span class=" -Color -Color-Cyan">&lt;ap&gt;&lt;ri&gt;&lt;co&gt;</span>t
+ [3] │ <span class=" -Color -Color-Cyan">&lt;av&gt;&lt;oc&gt;&lt;ad&gt;</span>o
+ [4] │ <span class=" -Color -Color-Cyan">&lt;ba&gt;&lt;na&gt;&lt;na&gt;</span>
+ [5] │ <span class=" -Color -Color-Cyan">&lt;be&gt;&lt;ll&gt;&lt; p&gt;&lt;ep&gt;&lt;pe&gt;</span>r
+ [6] │ <span class=" -Color -Color-Cyan">&lt;bi&gt;&lt;lb&gt;&lt;er&gt;&lt;ry&gt;</span>
+ [7] │ <span class=" -Color -Color-Cyan">&lt;bl&gt;&lt;ac&gt;&lt;kb&gt;&lt;er&gt;&lt;ry&gt;</span>
+ [8] │ <span class=" -Color -Color-Cyan">&lt;bl&gt;&lt;ac&gt;&lt;kc&gt;&lt;ur&gt;&lt;ra&gt;&lt;nt&gt;</span>
+ [9] │ <span class=" -Color -Color-Cyan">&lt;bl&gt;&lt;oo&gt;&lt;d &gt;&lt;or&gt;&lt;an&gt;&lt;ge&gt;</span>
+[10] │ <span class=" -Color -Color-Cyan">&lt;bl&gt;&lt;ue&gt;&lt;be&gt;&lt;rr&gt;</span>y
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> [1] │ a<span class=" -Color -Color-Cyan">&lt;pp&gt;</span>le
+ [5] │ be<span class=" -Color -Color-Cyan">&lt;ll&gt;</span> pe<span class=" -Color -Color-Cyan">&lt;pp&gt;</span>er
+ [6] │ bilbe<span class=" -Color -Color-Cyan">&lt;rr&gt;</span>y
+ [7] │ blackbe<span class=" -Color -Color-Cyan">&lt;rr&gt;</span>y
+ [8] │ blackcu<span class=" -Color -Color-Cyan">&lt;rr&gt;</span>ant
+ [9] │ bl<span class=" -Color -Color-Cyan">&lt;oo&gt;</span>d orange
+[10] │ bluebe<span class=" -Color -Color-Cyan">&lt;rr&gt;</span>y
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## 如果是匹配abab, wcwc</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">ft</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(..)\\1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+
+<span class="c1">## 如果是匹配abba, wccw</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">ft</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(.)(.)\\2\\1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">match</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[4] │ b<span class=" -Color -Color-Cyan">&lt;anan&gt;</span>a
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[5] │ bell p<span class=" -Color -Color-Cyan">&lt;eppe&gt;</span>r
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h2>6 大小写敏感<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">(?i)</span></code> 匹配元素不区分大小写</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tibble</span><span class="o">::</span><span class="nf">tribble</span><span class="p">(</span>
+<span class="w">  </span><span class="o">~</span><span class="n">tch_id</span><span class="p">,</span><span class="w">  </span><span class="o">~</span><span class="n">online_platform</span><span class="p">,</span>
+<span class="w">      </span><span class="m">105</span><span class="p">,</span><span class="w">          </span><span class="s">&quot;Google&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="m">106</span><span class="p">,</span><span class="w">            </span><span class="s">&quot;meet&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="m">107</span><span class="p">,</span><span class="w">            </span><span class="s">&quot;Zoom&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="m">108</span><span class="p">,</span><span class="w">            </span><span class="s">&quot;zoom&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="m">109</span><span class="p">,</span><span class="w">     </span><span class="s">&quot;Google Meet&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="m">112</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Microsoft Teams&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="m">113</span><span class="p">,</span><span class="w">                </span><span class="kc">NA</span>
+<span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 7 × 2</caption>
+<thead>
+	<tr><th scope=col>tch_id</th><th scope=col>online_platform</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>105</td><td>Google         </td></tr>
+	<tr><td>106</td><td>meet           </td></tr>
+	<tr><td>107</td><td>Zoom           </td></tr>
+	<tr><td>108</td><td>zoom           </td></tr>
+	<tr><td>109</td><td>Google Meet    </td></tr>
+	<tr><td>112</td><td>Microsoft Teams</td></tr>
+	<tr><td>113</td><td>NA             </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 希望找出线上平台是google和meet的记录，显然Google和google是一个意思，</span>
+<span class="c1"># 都应该被筛选出</span>
+<span class="c1">## 方法1 使用stringr::regex()</span>
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">filter</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">str_detect</span><span class="p">(</span><span class="n">online_platform</span><span class="p">,</span><span class="w"> </span><span class="nf">regex</span><span class="p">(</span><span class="s">&quot;google|meet&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ignore_case</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="c1">## 方法2 使用(?i)</span>
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">filter</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">str_detect</span><span class="p">(</span><span class="n">online_platform</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?i)google|meet&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 2</caption>
+<thead>
+	<tr><th scope=col>tch_id</th><th scope=col>online_platform</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>105</td><td>Google     </td></tr>
+	<tr><td>106</td><td>meet       </td></tr>
+	<tr><td>109</td><td>Google Meet</td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 2</caption>
+<thead>
+	<tr><th scope=col>tch_id</th><th scope=col>online_platform</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>105</td><td>Google     </td></tr>
+	<tr><td>106</td><td>meet       </td></tr>
+	<tr><td>109</td><td>Google Meet</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="id9">
+<h1>解决实际问题<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h2>1 确定一个字符向量是否匹配一种模式<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>实际问题中，想判断是否匹配？可以用到<code class="docutils literal notranslate"><span class="pre">str_detect()</span></code>函数，返回逻辑向量</p></li>
+<li><p>可用在<code class="docutils literal notranslate"><span class="pre">filter()</span></code>函数中，筛选某列符合条件的行</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stringr::words</span></code>包含了牛津字典里常用单词</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str_detect()</span></code> 有一个功能类似的函数<code class="docutils literal notranslate"><span class="pre">str_count()</span></code>，区别在于，后者不是简单地返回是或否，而是返回字符串中匹配的数量</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;banana&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pear&quot;</span><span class="p">)</span>
+<span class="nf">str_detect</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>TRUE</li><li>FALSE</li><li>TRUE</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span><span class="s">&quot;banana&quot;</span><span class="p">,</span><span class="s">&quot;pear&quot;</span><span class="p">))</span>
+<span class="n">d</span>
+<span class="n">d</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">mutate</span><span class="p">(</span><span class="n">has_e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_detect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;e&quot;</span><span class="p">))</span>
+<span class="n">d</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">dplyr</span><span class="o">::</span><span class="nf">filter</span><span class="p">(</span><span class="nf">str_detect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s">&quot;e&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 1</caption>
+<thead>
+	<tr><th scope=col>x</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>apple </td></tr>
+	<tr><td>banana</td></tr>
+	<tr><td>pear  </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>has_e</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;lgl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>apple </td><td> TRUE</td></tr>
+	<tr><td>banana</td><td>FALSE</td></tr>
+	<tr><td>pear  </td><td> TRUE</td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 2 × 1</caption>
+<thead>
+	<tr><th scope=col>x</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>apple</td></tr>
+	<tr><td>pear </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">stringr</span><span class="o">::</span><span class="n">words</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'a'</li><li>'able'</li><li>'about'</li><li>'absolute'</li><li>'accept'</li><li>'account'</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## 统计以t开头的单词</span>
+<span class="nf">sum</span><span class="p">(</span><span class="nf">str_detect</span><span class="p">(</span><span class="n">words</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;^t&quot;</span><span class="p">))</span>
+<span class="c1"># 以元音结尾的单词，占比多少？</span>
+<span class="nf">mean</span><span class="p">(</span><span class="nf">str_detect</span><span class="p">(</span><span class="n">words</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[aeiou]$&quot;</span><span class="p">))</span>
+
+<span class="c1">## 所以这里把逻辑向量强制转换为了数字型</span>
+<span class="nf">str_detect</span><span class="p">(</span><span class="n">words</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;^t&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">65</div><div class="output text_html">0.276530612244898</div><div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>FALSE</li><li>FALSE</li><li>FALSE</li><li>FALSE</li><li>FALSE</li><li>FALSE</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 在数据框里, 看看以x结尾的单词是哪些</span>
+
+<span class="nf">tibble</span><span class="p">(</span>
+<span class="w">  </span><span class="n">word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">words</span>
+<span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="n">dplyr</span><span class="o">::</span><span class="nf">filter</span><span class="p">(</span><span class="nf">str_detect</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x$&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 4 × 1</caption>
+<thead>
+	<tr><th scope=col>word</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>box</td></tr>
+	<tr><td>sex</td></tr>
+	<tr><td>six</td></tr>
+	<tr><td>tax</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># str_count() 函数，返回字符串中匹配的数量</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;banana&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pear&quot;</span><span class="p">)</span>
+<span class="nf">str_count</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>1</li><li>3</li><li>1</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">tibble</span><span class="p">(</span>
+<span class="w">  </span><span class="n">word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">words</span>
+<span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span>
+<span class="w">    </span><span class="n">vowels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_count</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[aeiou]&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">consonants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_count</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[^aeiou]&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># 除了元音字母外的数量</span>
+<span class="w">  </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 980 × 3</caption>
+<thead>
+	<tr><th scope=col>word</th><th scope=col>vowels</th><th scope=col>consonants</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>a        </td><td>1</td><td>0</td></tr>
+	<tr><td>able     </td><td>2</td><td>2</td></tr>
+	<tr><td>about    </td><td>3</td><td>2</td></tr>
+	<tr><td>absolute </td><td>4</td><td>4</td></tr>
+	<tr><td>accept   </td><td>2</td><td>4</td></tr>
+	<tr><td>account  </td><td>3</td><td>4</td></tr>
+	<tr><td>achieve  </td><td>4</td><td>3</td></tr>
+	<tr><td>across   </td><td>2</td><td>4</td></tr>
+	<tr><td>act      </td><td>1</td><td>2</td></tr>
+	<tr><td>active   </td><td>3</td><td>3</td></tr>
+	<tr><td>actual   </td><td>3</td><td>3</td></tr>
+	<tr><td>add      </td><td>1</td><td>2</td></tr>
+	<tr><td>address  </td><td>2</td><td>5</td></tr>
+	<tr><td>admit    </td><td>2</td><td>3</td></tr>
+	<tr><td>advertise</td><td>4</td><td>5</td></tr>
+	<tr><td>affect   </td><td>2</td><td>4</td></tr>
+	<tr><td>afford   </td><td>2</td><td>4</td></tr>
+	<tr><td>after    </td><td>2</td><td>3</td></tr>
+	<tr><td>afternoon</td><td>4</td><td>5</td></tr>
+	<tr><td>again    </td><td>3</td><td>2</td></tr>
+	<tr><td>against  </td><td>3</td><td>4</td></tr>
+	<tr><td>age      </td><td>2</td><td>1</td></tr>
+	<tr><td>agent    </td><td>2</td><td>3</td></tr>
+	<tr><td>ago      </td><td>2</td><td>1</td></tr>
+	<tr><td>agree    </td><td>3</td><td>2</td></tr>
+	<tr><td>air      </td><td>2</td><td>1</td></tr>
+	<tr><td>all      </td><td>1</td><td>2</td></tr>
+	<tr><td>allow    </td><td>2</td><td>3</td></tr>
+	<tr><td>almost   </td><td>2</td><td>4</td></tr>
+	<tr><td>along    </td><td>2</td><td>3</td></tr>
+	<tr><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+	<tr><td>whole    </td><td>2</td><td>3</td></tr>
+	<tr><td>why      </td><td>0</td><td>3</td></tr>
+	<tr><td>wide     </td><td>2</td><td>2</td></tr>
+	<tr><td>wife     </td><td>2</td><td>2</td></tr>
+	<tr><td>will     </td><td>1</td><td>3</td></tr>
+	<tr><td>win      </td><td>1</td><td>2</td></tr>
+	<tr><td>wind     </td><td>1</td><td>3</td></tr>
+	<tr><td>window   </td><td>2</td><td>4</td></tr>
+	<tr><td>wish     </td><td>1</td><td>3</td></tr>
+	<tr><td>with     </td><td>1</td><td>3</td></tr>
+	<tr><td>within   </td><td>2</td><td>4</td></tr>
+	<tr><td>without  </td><td>3</td><td>4</td></tr>
+	<tr><td>woman    </td><td>2</td><td>3</td></tr>
+	<tr><td>wonder   </td><td>2</td><td>4</td></tr>
+	<tr><td>wood     </td><td>2</td><td>2</td></tr>
+	<tr><td>word     </td><td>1</td><td>3</td></tr>
+	<tr><td>work     </td><td>1</td><td>3</td></tr>
+	<tr><td>world    </td><td>1</td><td>4</td></tr>
+	<tr><td>worry    </td><td>1</td><td>4</td></tr>
+	<tr><td>worse    </td><td>2</td><td>3</td></tr>
+	<tr><td>worth    </td><td>1</td><td>4</td></tr>
+	<tr><td>would    </td><td>2</td><td>3</td></tr>
+	<tr><td>write    </td><td>2</td><td>3</td></tr>
+	<tr><td>wrong    </td><td>1</td><td>4</td></tr>
+	<tr><td>year     </td><td>2</td><td>2</td></tr>
+	<tr><td>yes      </td><td>1</td><td>2</td></tr>
+	<tr><td>yesterday</td><td>3</td><td>6</td></tr>
+	<tr><td>yet      </td><td>1</td><td>2</td></tr>
+	<tr><td>you      </td><td>2</td><td>1</td></tr>
+	<tr><td>young    </td><td>2</td><td>3</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="id11">
+<h2>2 确定匹配的位置<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>正则表达式不会重叠匹配。比如用<code class="docutils literal notranslate"><span class="pre">&quot;aba&quot;</span></code>去匹配<code class="docutils literal notranslate"><span class="pre">&quot;abababa&quot;</span></code>，肉眼感觉是三次，但正则表达式告诉我们是两次，因为不会重叠匹配</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str_count()</span></code> 统计匹配到的数量</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str_view_count()</span></code> 查看所有匹配到的位置</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str_count</span><span class="p">(</span><span class="s">&quot;abababa&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aba&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">2</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str_view_all</span><span class="p">(</span><span class="s">&quot;abababa&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aba&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+“`str_view_all()` was deprecated in stringr 1.5.0.
+<span class=" -Color -Color-Cyan">ℹ</span> Please use `str_view()` instead.”
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ <span class=" -Color -Color-Cyan">&lt;aba&gt;</span>b<span class=" -Color -Color-Cyan">&lt;aba&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id12">
+<h2>3 提取匹配的内容<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">str_extract()</span></code> 只提取第一个——谁先匹配提取谁</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str_extract_all()</span></code>提取全部匹配到的内容</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">unnest()</span></code>将匹配到的内容分不同行保存, <code class="docutils literal notranslate"><span class="pre">keep_empty=TRUE</span></code>保留无法展开的行</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">colours</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span>
+<span class="w">  </span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;green&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;purple&quot;</span>
+<span class="p">)</span>
+<span class="n">colour_match</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">str_c</span><span class="p">(</span><span class="n">colours</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="o">=</span><span class="s">&quot;|&quot;</span><span class="p">)</span>
+<span class="n">colour_match1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">str_c</span><span class="p">(</span><span class="n">colours</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;|&quot;</span><span class="p">)</span>
+<span class="c1">## 直观的感受下 collapse 和 sep 的区别</span>
+<span class="n">colour_match</span>
+<span class="n">colour_match1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'red|orange|yellow|green|blue|purple'</div><div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'red'</li><li>'orange'</li><li>'yellow'</li><li>'green'</li><li>'blue'</li><li>'purple'</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str_view</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ab|cd&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[ab][cd]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ <span class=" -Color -Color-Cyan">&lt;ab&gt;&lt;cd&gt;</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ a<span class=" -Color -Color-Cyan">&lt;bc&gt;</span>d
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">more</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;It is hard to erase blue or red ink.&quot;</span>
+<span class="nf">str_extract</span><span class="p">(</span><span class="n">more</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colour_match</span><span class="p">)</span>
+<span class="nf">str_extract_all</span><span class="p">(</span><span class="n">more</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colour_match</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'blue'</div><div class="output text_html"><ol>
+	<li><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'blue'</li><li>'red'</li></ol>
+</li>
+</ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 取出sentences中，含有有两种和两种颜色以上的句子</span>
+<span class="n">more</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sentences</span><span class="p">[</span><span class="nf">str_count</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span><span class="w"> </span><span class="n">colour_match</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="p">]</span>
+<span class="n">more</span>
+
+<span class="nf">tibble</span><span class="p">(</span><span class="n">sentence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sentences</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">filter</span><span class="p">(</span><span class="nf">str_count</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span><span class="w"> </span><span class="n">colour_match</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'It is hard to erase blue or red ink.'</li><li>'The green light in the brown box flickered.'</li><li>'The sky in the west is tinged with orange red.'</li></ol>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 1</caption>
+<thead>
+	<tr><th scope=col>sentence</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>It is hard to erase blue or red ink.          </td></tr>
+	<tr><td>The green light in the brown box flickered.   </td></tr>
+	<tr><td>The sky in the west is tinged with orange red.</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># str_extract()提取匹配, 谁先匹配就提取谁</span>
+<span class="n">more</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sentences</span><span class="p">[</span><span class="nf">str_count</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span><span class="w"> </span><span class="n">colour_match</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="p">]</span>
+
+<span class="nf">tibble</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">more</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">colour_match</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>color</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>It is hard to erase blue or red ink.          </td><td>blue  </td></tr>
+	<tr><td>The green light in the brown box flickered.   </td><td>green </td></tr>
+	<tr><td>The sky in the west is tinged with orange red.</td><td>orange</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># str_extract_all()提取全部匹配项</span>
+<span class="nf">tibble</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">more</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">colour_match</span><span class="p">))</span>
+
+<span class="nf">tibble</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">more</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">colour_match</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">unnest</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>color</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;list&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>It is hard to erase blue or red ink.          </td><td>blue, red </td></tr>
+	<tr><td>The green light in the brown box flickered.   </td><td>green, red  </td></tr>
+	<tr><td>The sky in the west is tinged with orange red.</td><td>orange, red   </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 6 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>color</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>It is hard to erase blue or red ink.          </td><td>blue  </td></tr>
+	<tr><td>It is hard to erase blue or red ink.          </td><td>red   </td></tr>
+	<tr><td>The green light in the brown box flickered.   </td><td>green </td></tr>
+	<tr><td>The green light in the brown box flickered.   </td><td>red   </td></tr>
+	<tr><td>The sky in the west is tinged with orange red.</td><td>orange</td></tr>
+	<tr><td>The sky in the west is tinged with orange red.</td><td>red   </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="id13">
+<h2>4 替换匹配内容<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">str_replace()</span></code>  替换首个匹配</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str_replace_all()</span></code> 替换所有匹配</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pear&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;banana&quot;</span><span class="p">)</span>
+<span class="nf">str_replace</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[aeiou]&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'-pple'</li><li>'p-ar'</li><li>'b-nana'</li></ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str_replace_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[aeiou]&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'-ppl-'</li><li>'p--r'</li><li>'b-n-n-'</li></ol>
+</div></div>
+</div>
+</section>
+<section id="id14">
+<h2>5 拆分字符串<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>这个和<code class="docutils literal notranslate"><span class="pre">str_c()</span></code>是相反的操作</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">str_split()</span></code> <code class="docutils literal notranslate"><span class="pre">simplify=TRUE</span></code>将其转化为数据框</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">2</span></code>：这意味着每个原始字符串最多会被分割成两部分。例如，如果有多个冒号和空格，只会取前两个分隔后的部分。</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">lines</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;I love my country&quot;</span>
+<span class="n">lines</span>
+<span class="nf">str_split</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'I love my country'</div><div class="output text_html"><ol>
+	<li><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'I'</li><li>'love'</li><li>'my'</li><li>'country'</li></ol>
+</li>
+</ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fields</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Name: Hadley&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Country: N: Z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Age: 35&quot;</span><span class="p">)</span>
+<span class="n">fields</span>
+<span class="n">fields</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">str_split</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">simplify</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">fields</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">str_split</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">)</span>
+<span class="n">fields</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">str_split</span><span class="p">(</span><span class="s">&quot;: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">simplify</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'Name: Hadley'</li><li>'Country: N: Z'</li><li>'Age: 35'</li></ol>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A matrix: 3 × 2 of type chr</caption>
+<tbody>
+	<tr><td>Name   </td><td>Hadley</td></tr>
+	<tr><td>Country</td><td>N: Z  </td></tr>
+	<tr><td>Age    </td><td>35    </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><ol>
+	<li><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'Name'</li><li>'Hadley'</li></ol>
+</li>
+	<li><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'Country'</li><li>'N'</li><li>'Z'</li></ol>
+</li>
+	<li><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>'Age'</li><li>'35'</li></ol>
+</li>
+</ol>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A matrix: 3 × 3 of type chr</caption>
+<tbody>
+	<tr><td>Name   </td><td>Hadley</td><td> </td></tr>
+	<tr><td>Country</td><td>N     </td><td>Z</td></tr>
+	<tr><td>Age    </td><td>35    </td><td> </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="id15">
+<h1>进阶部分<a class="headerlink" href="#id15" title="Link to this heading">#</a></h1>
+<p>带有条件的匹配</p>
+<section id="look-ahead">
+<h2>1 <code class="docutils literal notranslate"><span class="pre">look</span> <span class="pre">ahead</span></code><a class="headerlink" href="#look-ahead" title="Link to this heading">#</a></h2>
+<p>Windows后面的 <code class="docutils literal notranslate"><span class="pre">()</span> </code>是匹配条件，事实上，有四种情形：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">(?=pattern)</span></code> 要求此位置的<strong>后面</strong>必须匹配表达式pattern</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(?!pattern)</span></code> 要求此位置的<strong>后面</strong>不能匹配表达式pattern</p></li>
+</ul>
+</section>
+<section id="look-behind">
+<h2>2 <code class="docutils literal notranslate"><span class="pre">look</span> <span class="pre">behind</span></code><a class="headerlink" href="#look-behind" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">(?&lt;=pattern)</span></code> 要求此位置的<strong>前面</strong>必须匹配表达式pattern</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(?&lt;!pattern)</span></code> 要求此位置的<strong>前面</strong>不能匹配表达式pattern</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># `look ahead`</span>
+<span class="c1"># 想匹配Windows，同时希望Windows右侧是&quot;95&quot;, &quot;98&quot;, &quot;NT&quot;, &quot;2000&quot;中的一个</span>
+<span class="n">win</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Windows2000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Windows&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Windows3.1&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">win</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Windows(?=95|98|NT|2000)&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">win</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Windows(?!95|98|NT|2000)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ <span class=" -Color -Color-Cyan">&lt;Windows&gt;</span>2000
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2] │ <span class=" -Color -Color-Cyan">&lt;Windows&gt;</span>
+[3] │ <span class=" -Color -Color-Cyan">&lt;Windows&gt;</span>3.1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## look behind</span>
+<span class="n">win</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;2000Windows&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Windows&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;3.1Windows&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">win</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;=95|98|NT|2000)Windows&quot;</span><span class="p">)</span>
+<span class="nf">str_view</span><span class="p">(</span><span class="n">win</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;!95|98|NT|2000)Windows&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] │ 2000<span class=" -Color -Color-Cyan">&lt;Windows&gt;</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2] │ <span class=" -Color -Color-Cyan">&lt;Windows&gt;</span>
+[3] │ 3.1<span class=" -Color -Color-Cyan">&lt;Windows&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id16">
+<h1>案例分析<a class="headerlink" href="#id16" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tidyr::extract()</span></code>提取匹配到pattern的整个元素，而不是pattern</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tidyr::extract(x,</span> <span class="pre">c(),</span> <span class="pre">&quot;pattern&quot;)</span></code> <code class="docutils literal notranslate"><span class="pre">c()</span></code>将匹配到的元素分成几列的列名，几列与pattern有关，pattern有几个<code class="docutils literal notranslate"><span class="pre">()</span></code>就几列</p></li>
+</ul>
+<section id="id17">
+<h2>案例1<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 我们希望能提取第二列中的数值，构成新的一列</span>
+<span class="n">dt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span>
+<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;wk 3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;week-1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;7&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;w#9&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">dt</span>
+
+<span class="n">dt</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span>
+<span class="w">    </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[0-9]&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 4 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>y</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>wk 3  </td></tr>
+	<tr><td>2</td><td>week-1</td></tr>
+	<tr><td>3</td><td>7     </td></tr>
+	<tr><td>4</td><td>w#9   </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 4 × 3</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>y</th><th scope=col>z</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>wk 3  </td><td>3</td></tr>
+	<tr><td>2</td><td>week-1</td><td>1</td></tr>
+	<tr><td>3</td><td>7     </td><td>7</td></tr>
+	<tr><td>4</td><td>w#9   </td><td>9</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="id18">
+<h2>案例2<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 提取第二列中的大写字母</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">7</span><span class="p">),</span>
+<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;2016123456&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;20150513&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;AB2016123456&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;J2017000987&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B2017000987C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;aksdf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2014&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">df</span>
+
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span>
+<span class="w">    </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract_all</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[A-Z]&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="n">tidyr</span><span class="o">::</span><span class="nf">unnest</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 7 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>y</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>2016123456  </td></tr>
+	<tr><td>2</td><td>20150513    </td></tr>
+	<tr><td>3</td><td>AB2016123456</td></tr>
+	<tr><td>4</td><td>J2017000987 </td></tr>
+	<tr><td>5</td><td>B2017000987C</td></tr>
+	<tr><td>6</td><td>aksdf       </td></tr>
+	<tr><td>7</td><td>2014        </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 5 × 3</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>y</th><th scope=col>z</th></tr>
+	<tr><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>3</td><td>AB2016123456</td><td>A</td></tr>
+	<tr><td>3</td><td>AB2016123456</td><td>B</td></tr>
+	<tr><td>4</td><td>J2017000987 </td><td>J</td></tr>
+	<tr><td>5</td><td>B2017000987C</td><td>B</td></tr>
+	<tr><td>5</td><td>B2017000987C</td><td>C</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="id19">
+<h2>案例3<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 要求：中英文分开</span>
+<span class="n">tb</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;I我&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;love爱&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;you你&quot;</span><span class="p">))</span>
+<span class="n">tb</span>
+<span class="n">tb</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="n">tidyr</span><span class="o">::</span><span class="nf">extract</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cn&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;([a-zA-Z]+)([^a-zA-Z]+)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">remove</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 1</caption>
+<thead>
+	<tr><th scope=col>x</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>I我   </td></tr>
+	<tr><td>love爱</td></tr>
+	<tr><td>you你 </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 3</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>en</th><th scope=col>cn</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>I我   </td><td>I   </td><td>我</td></tr>
+	<tr><td>love爱</td><td>love</td><td>爱</td></tr>
+	<tr><td>you你 </td><td>you </td><td>你</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="id20">
+<h2>案例4<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 要求：提取起始数字</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1-12week&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1-10week&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;5-12week&quot;</span><span class="p">))</span>
+<span class="n">df</span>
+
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">extract</span><span class="p">(</span>
+<span class="w">  </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;start&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;end&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cn&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;(\\d+)-(\\d+)(\\D+)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">remove</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 1</caption>
+<thead>
+	<tr><th scope=col>x</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1-12week</td></tr>
+	<tr><td>1-10week</td></tr>
+	<tr><td>5-12week</td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 3 × 4</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>start</th><th scope=col>end</th><th scope=col>cn</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1-12week</td><td>1</td><td>12</td><td>week</td></tr>
+	<tr><td>1-10week</td><td>1</td><td>10</td><td>week</td></tr>
+	<tr><td>5-12week</td><td>5</td><td>12</td><td>week</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="id21">
+<h2>案例5<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 要求：提取大写字母后的数字</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span>
+<span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;12W34&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;AB2C46&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B217C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;akTs6df&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;21WD4&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">df</span>
+
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;=[A-Z])[0-9]&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="n">tidyr</span><span class="o">::</span><span class="nf">unnest</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 5 × 1</caption>
+<thead>
+	<tr><th scope=col>x</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>12W34  </td></tr>
+	<tr><td>AB2C46 </td></tr>
+	<tr><td>B217C  </td></tr>
+	<tr><td>akTs6df</td></tr>
+	<tr><td>21WD4  </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 5 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>item</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>12W34 </td><td>3</td></tr>
+	<tr><td>AB2C46</td><td>2</td></tr>
+	<tr><td>AB2C46</td><td>4</td></tr>
+	<tr><td>B217C </td><td>2</td></tr>
+	<tr><td>21WD4 </td><td>4</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 提取大写字母后的连续数字</span>
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span>
+<span class="w">    </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;=[A-Z])\\d+&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="n">tidyr</span><span class="o">::</span><span class="nf">unnest</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="c1"># 提取数字前大写字母</span>
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span>
+<span class="w">    </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[A-Z](?=[0-9])&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="n">tidyr</span><span class="o">::</span><span class="nf">unnest</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 5 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>item</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>12W34 </td><td>34 </td></tr>
+	<tr><td>AB2C46</td><td>2  </td></tr>
+	<tr><td>AB2C46</td><td>46 </td></tr>
+	<tr><td>B217C </td><td>217</td></tr>
+	<tr><td>21WD4 </td><td>4  </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 5 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>item</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>12W34 </td><td>W</td></tr>
+	<tr><td>AB2C46</td><td>B</td></tr>
+	<tr><td>AB2C46</td><td>C</td></tr>
+	<tr><td>B217C </td><td>B</td></tr>
+	<tr><td>21WD4 </td><td>D</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Roman numerals: MDCCCLXXXVIII&quot;</span>
+<span class="nf">str_match_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s">&quot;C?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><ol>
+	<li><table class="dataframe">
+<caption>A matrix: 30 × 1 of type chr</caption>
+<tbody>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td>C</td></tr>
+	<tr><td>C</td></tr>
+	<tr><td>C</td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+	<tr><td> </td></tr>
+</tbody>
+</table>
+</li>
+</ol>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str_match_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CC?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><ol>
+	<li><table class="dataframe">
+<caption>A matrix: 2 × 1 of type chr</caption>
+<tbody>
+	<tr><td>CC</td></tr>
+	<tr><td>C </td></tr>
+</tbody>
+</table>
+</li>
+</ol>
+</div></div>
+</div>
+</section>
+<section id="id22">
+<h2>案例6<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 提取数字并求和</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1234&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B246&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;217C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2357f&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;21WD4&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">df</span>
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract_all</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\\d&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">unnest</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate_at</span><span class="p">(</span><span class="nf">vars</span><span class="p">(</span><span class="n">num</span><span class="p">),</span><span class="w"> </span><span class="n">as.numeric</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">group_by</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">summarise</span><span class="p">(</span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 5 × 1</caption>
+<thead>
+	<tr><th scope=col>x</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1234 </td></tr>
+	<tr><td>B246 </td></tr>
+	<tr><td>217C </td></tr>
+	<tr><td>2357f</td></tr>
+	<tr><td>21WD4</td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 5 × 2</caption>
+<thead>
+	<tr><th scope=col>x</th><th scope=col>sum</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1234 </td><td>10</td></tr>
+	<tr><td>217C </td><td>10</td></tr>
+	<tr><td>21WD4</td><td> 7</td></tr>
+	<tr><td>2357f</td><td>17</td></tr>
+	<tr><td>B246 </td><td>12</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="id23">
+<h2>案例7<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tibble::deframe()</span></code>将数据框或<code class="docutils literal notranslate"><span class="pre">tibble</span></code>转换为键值对</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## 文本替换</span>
+<span class="n">text</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;Quantum entanglement is a physical phenomenon that occurs when pairs or groups of particles are generated, interact, or share spatial proximity in ways such that the quantum state of each particle cannot be described independently of the state of the others, even when the particles are separated by a large distance.&quot;</span>
+
+<span class="n">pairs</span><span class="w"> </span><span class="o">&lt;-</span>
+<span class="w">  </span><span class="n">tibble</span><span class="o">::</span><span class="nf">tribble</span><span class="p">(</span>
+<span class="w">    </span><span class="o">~</span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="n">code</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;Quantum entanglement&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;A01&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;physical phenomenon&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;A02&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;quantum state&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;A03&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;quantum mechanics&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;A04&quot;</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">  </span><span class="n">tibble</span><span class="o">::</span><span class="nf">deframe</span><span class="p">()</span>
+<span class="n">pairs</span>
+
+<span class="n">text</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">str_replace_all</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>Quantum entanglement</dt><dd>'A01'</dd><dt>physical phenomenon</dt><dd>'A02'</dd><dt>quantum state</dt><dd>'A03'</dd><dt>quantum mechanics</dt><dd>'A04'</dd></dl>
+</div><div class="output text_html">'A01 is a A02 that occurs when pairs or groups of particles are generated, interact, or share spatial proximity in ways such that the A03 of each particle cannot be described independently of the state of the others, even when the particles are separated by a large distance.'</div></div>
+</div>
+</section>
+<section id="id24">
+<h2>案例8<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># 提取Sichuan Univ后面的学院</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tibble</span><span class="o">::</span><span class="nf">tribble</span><span class="p">(</span>
+<span class="w">  </span><span class="o">~</span><span class="n">No</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="n">address</span><span class="p">,</span>
+<span class="w">    </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sichuan Univ, Coll Chem&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sichuan Univ, Coll Elect Engn&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sichuan Univ, Dept Phys&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sichuan Univ, Coll Life Sci&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sichuan Univ, Food Engn&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sichuan Univ, Coll Phys&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Sichuan Univ, Sch Business&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Wuhan Univ, Mat Sci&quot;</span><span class="p">)</span>
+<span class="n">df</span>
+
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">college</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_extract</span><span class="p">(</span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;(?&lt;=Sichuan Univ, ).*&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="n">tidyr</span><span class="o">::</span><span class="nf">unnest</span><span class="p">(</span><span class="n">college</span><span class="p">,</span><span class="w"> </span><span class="n">keep_empty</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 8 × 2</caption>
+<thead>
+	<tr><th scope=col>No</th><th scope=col>address</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>Sichuan Univ, Coll Chem      </td></tr>
+	<tr><td>2</td><td>Sichuan Univ, Coll Elect Engn</td></tr>
+	<tr><td>3</td><td>Sichuan Univ, Dept Phys      </td></tr>
+	<tr><td>4</td><td>Sichuan Univ, Coll Life Sci  </td></tr>
+	<tr><td>5</td><td>Sichuan Univ, Food Engn      </td></tr>
+	<tr><td>6</td><td>Sichuan Univ, Coll Phys      </td></tr>
+	<tr><td>7</td><td>Sichuan Univ, Sch Business   </td></tr>
+	<tr><td>8</td><td>Wuhan Univ, Mat Sci          </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 8 × 3</caption>
+<thead>
+	<tr><th scope=col>No</th><th scope=col>address</th><th scope=col>college</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>Sichuan Univ, Coll Chem      </td><td>Coll Chem      </td></tr>
+	<tr><td>2</td><td>Sichuan Univ, Coll Elect Engn</td><td>Coll Elect Engn</td></tr>
+	<tr><td>3</td><td>Sichuan Univ, Dept Phys      </td><td>Dept Phys      </td></tr>
+	<tr><td>4</td><td>Sichuan Univ, Coll Life Sci  </td><td>Coll Life Sci  </td></tr>
+	<tr><td>5</td><td>Sichuan Univ, Food Engn      </td><td>Food Engn      </td></tr>
+	<tr><td>6</td><td>Sichuan Univ, Coll Phys      </td><td>Coll Phys      </td></tr>
+	<tr><td>7</td><td>Sichuan Univ, Sch Business   </td><td>Sch Business   </td></tr>
+	<tr><td>8</td><td>Wuhan Univ, Mat Sci          </td><td>NA             </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">college</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">str_remove_all</span><span class="p">(</span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.*, &quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 8 × 3</caption>
+<thead>
+	<tr><th scope=col>No</th><th scope=col>address</th><th scope=col>college</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>Sichuan Univ, Coll Chem      </td><td>Coll Chem      </td></tr>
+	<tr><td>2</td><td>Sichuan Univ, Coll Elect Engn</td><td>Coll Elect Engn</td></tr>
+	<tr><td>3</td><td>Sichuan Univ, Dept Phys      </td><td>Dept Phys      </td></tr>
+	<tr><td>4</td><td>Sichuan Univ, Coll Life Sci  </td><td>Coll Life Sci  </td></tr>
+	<tr><td>5</td><td>Sichuan Univ, Food Engn      </td><td>Food Engn      </td></tr>
+	<tr><td>6</td><td>Sichuan Univ, Coll Phys      </td><td>Coll Phys      </td></tr>
+	<tr><td>7</td><td>Sichuan Univ, Sch Business   </td><td>Sch Business   </td></tr>
+	<tr><td>8</td><td>Wuhan Univ, Mat Sci          </td><td>Mat Sci        </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">separate</span><span class="p">(</span>
+<span class="w">    </span><span class="n">address</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">into</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;univ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;college&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;,&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">remove</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 8 × 4</caption>
+<thead>
+	<tr><th scope=col>No</th><th scope=col>address</th><th scope=col>univ</th><th scope=col>college</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>Sichuan Univ, Coll Chem      </td><td>Sichuan Univ</td><td> Coll Chem      </td></tr>
+	<tr><td>2</td><td>Sichuan Univ, Coll Elect Engn</td><td>Sichuan Univ</td><td> Coll Elect Engn</td></tr>
+	<tr><td>3</td><td>Sichuan Univ, Dept Phys      </td><td>Sichuan Univ</td><td> Dept Phys      </td></tr>
+	<tr><td>4</td><td>Sichuan Univ, Coll Life Sci  </td><td>Sichuan Univ</td><td> Coll Life Sci  </td></tr>
+	<tr><td>5</td><td>Sichuan Univ, Food Engn      </td><td>Sichuan Univ</td><td> Food Engn      </td></tr>
+	<tr><td>6</td><td>Sichuan Univ, Coll Phys      </td><td>Sichuan Univ</td><td> Coll Phys      </td></tr>
+	<tr><td>7</td><td>Sichuan Univ, Sch Business   </td><td>Sichuan Univ</td><td> Sch Business   </td></tr>
+	<tr><td>8</td><td>Wuhan Univ, Mat Sci          </td><td>Wuhan Univ  </td><td> Mat Sci        </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">tidyr</span><span class="o">::</span><span class="nf">extract</span><span class="p">(</span>
+<span class="w">  </span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;univ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;college&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;(Sichuan Univ), (.+)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">remove</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">tidyr</span><span class="o">::</span><span class="nf">extract</span><span class="p">(</span>
+<span class="w">  </span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;univ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;college&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;(.*), (.+)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">remove</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 8 × 4</caption>
+<thead>
+	<tr><th scope=col>No</th><th scope=col>address</th><th scope=col>univ</th><th scope=col>college</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>Sichuan Univ, Coll Chem      </td><td>Sichuan Univ</td><td>Coll Chem      </td></tr>
+	<tr><td>2</td><td>Sichuan Univ, Coll Elect Engn</td><td>Sichuan Univ</td><td>Coll Elect Engn</td></tr>
+	<tr><td>3</td><td>Sichuan Univ, Dept Phys      </td><td>Sichuan Univ</td><td>Dept Phys      </td></tr>
+	<tr><td>4</td><td>Sichuan Univ, Coll Life Sci  </td><td>Sichuan Univ</td><td>Coll Life Sci  </td></tr>
+	<tr><td>5</td><td>Sichuan Univ, Food Engn      </td><td>Sichuan Univ</td><td>Food Engn      </td></tr>
+	<tr><td>6</td><td>Sichuan Univ, Coll Phys      </td><td>Sichuan Univ</td><td>Coll Phys      </td></tr>
+	<tr><td>7</td><td>Sichuan Univ, Sch Business   </td><td>Sichuan Univ</td><td>Sch Business   </td></tr>
+	<tr><td>8</td><td>Wuhan Univ, Mat Sci          </td><td>NA          </td><td>NA             </td></tr>
+</tbody>
+</table>
+</div><div class="output text_html"><table class="dataframe">
+<caption>A tibble: 8 × 4</caption>
+<thead>
+	<tr><th scope=col>No</th><th scope=col>address</th><th scope=col>univ</th><th scope=col>college</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>Sichuan Univ, Coll Chem      </td><td>Sichuan Univ</td><td>Coll Chem      </td></tr>
+	<tr><td>2</td><td>Sichuan Univ, Coll Elect Engn</td><td>Sichuan Univ</td><td>Coll Elect Engn</td></tr>
+	<tr><td>3</td><td>Sichuan Univ, Dept Phys      </td><td>Sichuan Univ</td><td>Dept Phys      </td></tr>
+	<tr><td>4</td><td>Sichuan Univ, Coll Life Sci  </td><td>Sichuan Univ</td><td>Coll Life Sci  </td></tr>
+	<tr><td>5</td><td>Sichuan Univ, Food Engn      </td><td>Sichuan Univ</td><td>Food Engn      </td></tr>
+	<tr><td>6</td><td>Sichuan Univ, Coll Phys      </td><td>Sichuan Univ</td><td>Coll Phys      </td></tr>
+	<tr><td>7</td><td>Sichuan Univ, Sch Business   </td><td>Sichuan Univ</td><td>Sch Business   </td></tr>
+	<tr><td>8</td><td>Wuhan Univ, Mat Sci          </td><td>Wuhan Univ  </td><td>Mat Sci        </td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">什么是正则表达式</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">字符串基础</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str-length">1 字符串长度<code class="docutils literal notranslate"><span class="pre">str_length()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str-c">2 字符串组合<code class="docutils literal notranslate"><span class="pre">str_c()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str-sub">3 字符串取子集<code class="docutils literal notranslate"><span class="pre">str_sub()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">使用正则表达式进行模式匹配</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str-view">1 基础匹配<code class="docutils literal notranslate"><span class="pre">str_view()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2 锚点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3 字符类与字符选项</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4 重复</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5 分组与回溯引用</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">6 大小写敏感</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">解决实际问题</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1 确定一个字符向量是否匹配一种模式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2 确定匹配的位置</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3 提取匹配的内容</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">4 替换匹配内容</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">5 拆分字符串</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">进阶部分</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#look-ahead">1 <code class="docutils literal notranslate"><span class="pre">look</span> <span class="pre">ahead</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#look-behind">2 <code class="docutils literal notranslate"><span class="pre">look</span> <span class="pre">behind</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">案例分析</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">案例1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">案例2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">案例3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">案例4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">案例5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">案例6</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">案例7</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">案例8</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Lulu Shi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

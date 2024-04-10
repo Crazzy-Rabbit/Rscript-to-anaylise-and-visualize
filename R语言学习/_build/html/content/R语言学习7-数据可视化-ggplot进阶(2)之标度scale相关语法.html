@@ -1,0 +1,782 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ggplot2之标度scale相关语法 &#8212; My R Learning Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/R语言学习7-数据可视化-ggplot进阶(2)之标度scale相关语法';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My R Learning Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/R语言学习7-数据可视化-ggplot进阶(2)之标度scale相关语法.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/R语言学习7-数据可视化-ggplot进阶(2)之标度scale相关语法.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ggplot2之标度scale相关语法</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">标度</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">图形属性和变量类型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">坐标轴和图例是同样的东西</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">丰富的标度体系</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">案例详解</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ggplot2scale">
+<h1><code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>之标度<code class="docutils literal notranslate"><span class="pre">scale</span></code>相关语法<a class="headerlink" href="#ggplot2scale" title="Link to this heading">#</a></h1>
+<p><strong>ggplot2</strong>中的<code class="docutils literal notranslate"><span class="pre">scales</span></code>语法</p>
+<p><strong>ggplot2</strong>图层语法框架<img alt="image.png" src="../_images/ggplot2_system.png" /></p>
+<section id="id1">
+<h2>标度<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>中，映射是数据转化到图形属性，这里的图形属性是指视觉可以感知的东西，比如大小，形状，颜色和位置等。标度（<code class="docutils literal notranslate"><span class="pre">scale</span></code>）是控制着数据到图形属性映射的函数，每一种标度都是从数据空间的某个区域（标度的定义域）到图形属性空间的某个区域（标度的值域）的一个函数。</p>
+<p>简单点来说，<strong>标度是用于调整数据映射的图形属性</strong>。 在<code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>中，每一种图形属性都拥有一个默认的标度，也许你对这个默认的标度不满意，可以就需要学习如何修改默认的标度。比如， 系统默认<code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code>对应红色，<code class="docutils literal notranslate"><span class="pre">&quot;b&quot;</span></code>对应蓝色，我们想让<code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code>对应紫色，<code class="docutils literal notranslate"><span class="pre">&quot;b&quot;</span></code>对应橙色。</p>
+</section>
+<section id="id2">
+<h2>图形属性和变量类型<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>还是用我们熟悉的<code class="docutils literal notranslate"><span class="pre">ggplot2::mpg</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>── <span class=" -Color -Color-Bold">Attaching core tidyverse packages</span> ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">dplyr    </span> 1.1.4     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">readr    </span> 2.1.5
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">forcats  </span> 1.0.0     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">stringr  </span> 1.5.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">ggplot2  </span> 3.5.0     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">tibble   </span> 3.2.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">lubridate</span> 1.9.3     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">tidyr    </span> 1.3.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">purrr    </span> 1.0.2     
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>── <span class=" -Color -Color-Bold">Conflicts</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<span class=" -Color -Color-Red">✖</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">filter()</span> masks <span class=" -Color -Color-Blue">stats</span>::filter()
+<span class=" -Color -Color-Red">✖</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">lag()</span>    masks <span class=" -Color -Color-Blue">stats</span>::lag()
+<span class=" -Color -Color-Cyan">ℹ</span> Use the conflicted package (<span class=" -Color -Color-Blue">&lt;http://conflicted.r-lib.org/&gt;</span>) to force all conflicts to become errors
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ggplot2</span><span class="o">::</span><span class="n">mpg</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d5131f2eb82ee61061bf9f56c2d94beeb9f6a022dcdcbc4d26dff350dd9e1ed1.png" src="../_images/d5131f2eb82ee61061bf9f56c2d94beeb9f6a022dcdcbc4d26dff350dd9e1ed1.png" />
+</div>
+</div>
+<p>事实上，根据映射关系和变量名，我们将标度写完整，应该是这样的</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="o">+</span>
+
+<span class="w">  </span><span class="nf">scale_x_continuous</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_y_continuous</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_discrete</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d5131f2eb82ee61061bf9f56c2d94beeb9f6a022dcdcbc4d26dff350dd9e1ed1.png" src="../_images/d5131f2eb82ee61061bf9f56c2d94beeb9f6a022dcdcbc4d26dff350dd9e1ed1.png" />
+</div>
+</div>
+<p>如果每次都要手动设置一次标度函数，那将是比较繁琐的事情。因此<code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>使用了默认了设置，如果不满意<code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>的默认值，可以手动调整或者改写标度</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nf">scale_x_continuous</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;This is my x axis&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;This is my y axis&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_brewer</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/66260f5ac8874b43e480533dc0c9789a81bbae72ba5ec68ad8ac4e0c24d07dfd.png" src="../_images/66260f5ac8874b43e480533dc0c9789a81bbae72ba5ec68ad8ac4e0c24d07dfd.png" />
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>坐标轴和图例是同样的东西<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p><img alt="image.png" src="../_images/ggplot2-scales.png" /></p>
+</section>
+<section id="id4">
+<h2>丰富的标度体系<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>注意到，标度函数是由”<code class="docutils literal notranslate"><span class="pre">_</span></code>“分割的三个部分构成的 - <code class="docutils literal notranslate"><span class="pre">scale</span></code> - 视觉属性名 (e.g., <code class="docutils literal notranslate"><span class="pre">colour</span></code>, <code class="docutils literal notranslate"><span class="pre">shape</span></code> or <code class="docutils literal notranslate"><span class="pre">x</span></code>) - 标度名 (e.g., <code class="docutils literal notranslate"><span class="pre">continuous</span></code>, <code class="docutils literal notranslate"><span class="pre">discrete</span></code>, <code class="docutils literal notranslate"><span class="pre">brewer</span></code>).<img alt="image.png" src="../_images/ggplot2_scales_cheat.jpg" /></p>
+<p>每个标度函数内部都有丰富的参数系统</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">scale_colour_manual</span><span class="p">(</span>
+<span class="w">  </span><span class="n">palette</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">(),</span><span class="w"> </span>
+<span class="w">  </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">waiver</span><span class="p">(),</span>
+<span class="w">  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">waiver</span><span class="p">(),</span>
+<span class="w">  </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">waiver</span><span class="p">(),</span>
+<span class="w">  </span><span class="n">minor_breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">waiver</span><span class="p">(),</span>
+<span class="w">  </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">waiver</span><span class="p">(),</span>
+<span class="w">  </span><span class="kc">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">parse</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">srcfile</span> <span class="o">=</span> <span class="n">src</span><span class="p">):</span> <span class="o">&lt;</span><span class="n">text</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span> <span class="n">意外的</span><span class="s1">&#39;,&#39;</span>
+<span class="mi">1</span><span class="p">:</span> <span class="n">scale_colour_manual</span><span class="p">(</span>
+<span class="mi">2</span><span class="p">:</span>   <span class="n">palette</span> <span class="o">=</span> <span class="n">function</span><span class="p">(),</span>
+                         <span class="o">^</span>
+<span class="ne">Traceback</span>:
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>参数<code class="docutils literal notranslate"><span class="pre">name</span></code>，坐标和图例的名字，如果不想要图例的名字，就可以 <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">NULL</span></code></p></li>
+<li><p>参数<code class="docutils literal notranslate"><span class="pre">limits</span></code>, 坐标或图例的范围区间。连续性<code class="docutils literal notranslate"><span class="pre">c(n,</span> <span class="pre">m)</span></code>，离散型<code class="docutils literal notranslate"><span class="pre">c(&quot;a&quot;,</span> <span class="pre">&quot;b&quot;,</span> <span class="pre">&quot;c&quot;)</span></code></p></li>
+<li><p>参数<code class="docutils literal notranslate"><span class="pre">breaks</span></code>, 控制显示在坐标轴或者图例上的值（元素）</p></li>
+<li><p>参数<code class="docutils literal notranslate"><span class="pre">labels</span></code>, 坐标和图例的间隔标签</p>
+<ul>
+<li><p>一般情况下，内置函数会自动完成</p></li>
+<li><p>也可人工指定一个字符型向量，与<code class="docutils literal notranslate"><span class="pre">breaks</span></code>提供的字符型向量一一对应</p></li>
+<li><p>也可以是函数，把<code class="docutils literal notranslate"><span class="pre">breaks</span></code>提供的字符型向量当做函数的输入</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code>，就是去掉标签</p></li>
+</ul>
+</li>
+<li><p>参数<code class="docutils literal notranslate"><span class="pre">values</span></code> 指的是（颜色、形状等）视觉属性值,</p>
+<ul>
+<li><p>要么，与数值的顺序一致；</p></li>
+<li><p>要么，与<code class="docutils literal notranslate"><span class="pre">breaks</span></code>提供的字符型向量长度一致</p></li>
+<li><p>要么，用命名向量<code class="docutils literal notranslate"><span class="pre">c(&quot;数据标签&quot;</span> <span class="pre">=</span> <span class="pre">&quot;视觉属性&quot;)</span></code>提供</p></li>
+</ul>
+</li>
+<li><p>参数<code class="docutils literal notranslate"><span class="pre">expand</span></code>, 控制参数溢出量</p></li>
+<li><p>参数<code class="docutils literal notranslate"><span class="pre">range</span></code>, 设置尺寸大小范围，比如针对点的相对大小</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>案例详解<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read_csv</span><span class="p">(</span><span class="s">&quot;./demo_data/gapminder.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">Rows: </span><span class=" -Color -Color-Blue">1704</span> <span class=" -Color -Color-Bold">Columns: </span><span class=" -Color -Color-Blue">6</span>
+<span class=" -Color -Color-Cyan">──</span> <span class=" -Color -Color-Bold">Column specification</span> <span class=" -Color -Color-Cyan">─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class=" -Color -Color-Bold">Delimiter:</span> &quot;,&quot;
+<span class=" -Color -Color-Red">chr</span> (2): country, continent
+<span class=" -Color -Color-Green">dbl</span> (4): year, lifeExp, pop, gdpPercap
+
+<span class=" -Color -Color-Cyan">ℹ</span> Use `spec()` to retrieve the full column specification for this data.
+<span class=" -Color -Color-Cyan">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">newgapdata</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">group_by</span><span class="p">(</span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">country</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">summarise</span><span class="p">(</span>
+<span class="w">    </span><span class="nf">across</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">pop</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="n">newgapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`summarise()` has grouped output by &#39;continent&#39;. You can override using the `.groups` argument.
+</pre></div>
+</div>
+<div class="output text_html"><table class="dataframe">
+<caption>A grouped_df: 6 × 5</caption>
+<thead>
+	<tr><th scope=col>continent</th><th scope=col>country</th><th scope=col>lifeExp</th><th scope=col>gdpPercap</th><th scope=col>pop</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Africa</td><td>Algeria     </td><td>59.03017</td><td>4426.0260</td><td>19875406.2</td></tr>
+	<tr><td>Africa</td><td>Angola      </td><td>37.88350</td><td>3607.1005</td><td> 7309390.1</td></tr>
+	<tr><td>Africa</td><td>Benin       </td><td>48.77992</td><td>1155.3951</td><td> 4017496.7</td></tr>
+	<tr><td>Africa</td><td>Botswana    </td><td>54.59750</td><td>5031.5036</td><td>  971186.2</td></tr>
+	<tr><td>Africa</td><td>Burkina Faso</td><td>44.69400</td><td> 843.9907</td><td> 7548677.2</td></tr>
+	<tr><td>Africa</td><td>Burundi     </td><td>44.81733</td><td> 471.6630</td><td> 4651608.3</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">newgapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pop</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_continuous</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e0890e351ab173bdbdb702d100371c85588b2676339ad7d6647ba8f71c479971.png" src="../_images/e0890e351ab173bdbdb702d100371c85588b2676339ad7d6647ba8f71c479971.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">newgapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pop</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_x_log10</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c2ff7e2895767d33bdef0dfb04e46c837ad16c7914efbc0d62bf66f36c440ac2.png" src="../_images/c2ff7e2895767d33bdef0dfb04e46c837ad16c7914efbc0d62bf66f36c440ac2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">newgapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pop</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_x_log10</span><span class="p">(</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">500</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">3000</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">30000</span><span class="p">),</span>
+<span class="w">                  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">dollar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/50bd2a53156e5b89eb509235d543f749b11cc5f1f84e32c09c78e09193f7158d.png" src="../_images/50bd2a53156e5b89eb509235d543f749b11cc5f1f84e32c09c78e09193f7158d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">newgapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pop</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_x_log10</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;GDP per capital&quot;</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">500</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">3000</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">30000</span><span class="p">),</span>
+<span class="w">                  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="nf">unit_format</span><span class="p">(</span><span class="n">unit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dollar&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cb3d5034d2bc0804a3a0292fd384599853e7bb564878b18b05897255487832c7.png" src="../_images/cb3d5034d2bc0804a3a0292fd384599853e7bb564878b18b05897255487832c7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">newgapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pop</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_color_viridis_d</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d35e951b0ea412e287f21ec0e07971db7f3a186c2d6b102cecbf1f11cec0b95c.png" src="../_images/d35e951b0ea412e287f21ec0e07971db7f3a186c2d6b102cecbf1f11cec0b95c.png" />
+</div>
+</div>
+<p>离散变量映射到色彩的情形，可以使用<code class="docutils literal notranslate"><span class="pre">ColorBrewer</span></code>色彩。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">newgapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pop</span><span class="p">))</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_color_brewer</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;qual&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">palette</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Set1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8c7b99cfa4004743dd043f837308b5a2b478c5fcb2630ac37d2e2a3096aa76fa.png" src="../_images/8c7b99cfa4004743dd043f837308b5a2b478c5fcb2630ac37d2e2a3096aa76fa.png" />
+</div>
+</div>
+<p>当然，颜色和大小这些也可通过自定义</p>
+<p><code class="docutils literal notranslate"><span class="pre">scale_color_manual</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">scale_size</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">newgapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pop</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;continents&quot;</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Africa&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Americas&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Asia&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">,</span>
+<span class="w">                                  </span><span class="s">&quot;Europe&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Oceania&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gray&quot;</span><span class="p">),</span>
+<span class="w">                       </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Africa&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Americas&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Asia&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Europe&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Oceania&quot;</span><span class="p">),</span>
+<span class="w">                       </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;africa&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;americas&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;asia&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;europe&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;oceania&quot;</span><span class="p">)</span>
+<span class="w">                      </span><span class="p">)</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_size</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;population size&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2e8</span><span class="p">,</span><span class="w"> </span><span class="m">5e8</span><span class="p">,</span><span class="w"> </span><span class="m">7e8</span><span class="p">),</span>
+<span class="w">               </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;200 million&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;500 million&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;700 million&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c178df17a02f498c996250a8cf607cfe2a05839a6099a44afc3f1c42cbe464e7.png" src="../_images/c178df17a02f498c996250a8cf607cfe2a05839a6099a44afc3f1c42cbe464e7.png" />
+</div>
+</div>
+<p><strong>那什么时候用标度，什么时候用主题？</strong></p>
+<p><strong>这里有个原则：主题风格不会增加标签，也不会改变变量的范围，主题只会改变字体、大小、颜色等等。</strong></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">标度</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">图形属性和变量类型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">坐标轴和图例是同样的东西</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">丰富的标度体系</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">案例详解</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Lulu Shi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

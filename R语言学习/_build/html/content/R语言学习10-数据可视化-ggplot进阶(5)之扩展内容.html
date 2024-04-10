@@ -1,0 +1,1219 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ggplot2之扩展内容 &#8212; My R Learning Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/R语言学习10-数据可视化-ggplot进阶(5)之扩展内容';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My R Learning Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/R语言学习10-数据可视化-ggplot进阶(5)之扩展内容.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/R语言学习10-数据可视化-ggplot进阶(5)之扩展内容.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ggplot2之扩展内容</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">定制</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1 标签</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2 定制颜色</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">组合图片</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cowplot">1 <code class="docutils literal notranslate"><span class="pre">cowplot</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">高亮某一组</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1 <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gghighlight">.2 gghighlight方法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d">3D效果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">弯曲文本</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">函数图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latex">latex公式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coord-cartesian-scale-x-continuous">“coord_cartesian() 与 scale_x_continuous()”</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ggplot2">
+<h1><code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>之扩展内容<a class="headerlink" href="#ggplot2" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>有很多扩展包</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;sf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cowplot&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;patchwork&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;gghighlight&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ggforce&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ggfx&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>还安装相依关系‘proxy’, ‘e1071’, ‘class’, ‘wk’, ‘classInt’, ‘s2’, ‘units’, ‘magick’
+
+
+Warning message in install.packages(c(&quot;sf&quot;, &quot;cowplot&quot;, &quot;patchwork&quot;, &quot;gghighlight&quot;, :
+“安装程序包‘units’时退出狀態的值不是0”
+Warning message in install.packages(c(&quot;sf&quot;, &quot;cowplot&quot;, &quot;patchwork&quot;, &quot;gghighlight&quot;, :
+“安装程序包‘sf’时退出狀態的值不是0”
+更新&#39;.Library&#39;里的HTML程序包列表
+
+Making &#39;packages.html&#39; ...
+ 做完了。
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">gghighlight</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">cowplot</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggforce</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggridges</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>── <span class=" -Color -Color-Bold">Attaching core tidyverse packages</span> ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">dplyr    </span> 1.1.4     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">readr    </span> 2.1.5
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">forcats  </span> 1.0.0     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">stringr  </span> 1.5.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">ggplot2  </span> 3.5.0     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">tibble   </span> 3.2.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">lubridate</span> 1.9.3     <span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">tidyr    </span> 1.3.1
+<span class=" -Color -Color-Green">✔</span> <span class=" -Color -Color-Blue">purrr    </span> 1.0.2     
+── <span class=" -Color -Color-Bold">Conflicts</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<span class=" -Color -Color-Red">✖</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">filter()</span> masks <span class=" -Color -Color-Blue">stats</span>::filter()
+<span class=" -Color -Color-Red">✖</span> <span class=" -Color -Color-Blue">dplyr</span>::<span class=" -Color -Color-Green">lag()</span>    masks <span class=" -Color -Color-Blue">stats</span>::lag()
+<span class=" -Color -Color-Cyan">ℹ</span> Use the conflicted package (<span class=" -Color -Color-Blue">&lt;http://conflicted.r-lib.org/&gt;</span>) to force all conflicts to become errors
+
+载入程辑包：‘cowplot’
+
+
+The following object is masked from ‘package:lubridate’:
+
+    stamp
+
+
+
+载入程辑包：‘patchwork’
+
+
+The following object is masked from ‘package:cowplot’:
+
+    align_plots
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_smooth</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1: geom_point() + geom_smooth()&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_bin_2d</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;2: geom_bin_2d()&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_bar</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;3: geom_bar()&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p4</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_histogram</span><span class="p">(</span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;white&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;4: geom_histogram()&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_violin</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;5: geom_violin()&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p6</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_boxplot</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;6: geom_boxplot()&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p7</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_density</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.7</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;7: geom_density&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p8</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_density_ridges</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;8: geom_density_ridges&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p9</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cty</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_density_2d</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;9: geom_density_2d()&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bold&quot;</span><span class="p">))</span>
+
+<span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p6</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p7</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p8</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p9</span>
+
+<span class="nf">ggsave</span><span class="p">(</span><span class="s">&quot;plot.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">dpi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">600</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
+Picking joint bandwidth of 0.879
+
+`geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
+Picking joint bandwidth of 0.879
+</pre></div>
+</div>
+<img alt="../_images/c6f47dc61d98883b44b49ed2e1af908ae8e17caea453382515d2bb2bcbae0cdc.png" src="../_images/c6f47dc61d98883b44b49ed2e1af908ae8e17caea453382515d2bb2bcbae0cdc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">mpg</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 6 × 11</caption>
+<thead>
+	<tr><th scope=col>manufacturer</th><th scope=col>model</th><th scope=col>displ</th><th scope=col>year</th><th scope=col>cyl</th><th scope=col>trans</th><th scope=col>drv</th><th scope=col>cty</th><th scope=col>hwy</th><th scope=col>fl</th><th scope=col>class</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>audi</td><td>a4</td><td>1.8</td><td>1999</td><td>4</td><td>auto(l5)  </td><td>f</td><td>18</td><td>29</td><td>p</td><td>compact</td></tr>
+	<tr><td>audi</td><td>a4</td><td>1.8</td><td>1999</td><td>4</td><td>manual(m5)</td><td>f</td><td>21</td><td>29</td><td>p</td><td>compact</td></tr>
+	<tr><td>audi</td><td>a4</td><td>2.0</td><td>2008</td><td>4</td><td>manual(m6)</td><td>f</td><td>20</td><td>31</td><td>p</td><td>compact</td></tr>
+	<tr><td>audi</td><td>a4</td><td>2.0</td><td>2008</td><td>4</td><td>auto(av)  </td><td>f</td><td>21</td><td>30</td><td>p</td><td>compact</td></tr>
+	<tr><td>audi</td><td>a4</td><td>2.8</td><td>1999</td><td>6</td><td>auto(l5)  </td><td>f</td><td>16</td><td>26</td><td>p</td><td>compact</td></tr>
+	<tr><td>audi</td><td>a4</td><td>2.8</td><td>1999</td><td>6</td><td>manual(m5)</td><td>f</td><td>18</td><td>26</td><td>p</td><td>compact</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<section id="id1">
+<h2>定制<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>1 标签<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ggtitle(&quot;My</span> <span class="pre">Plot</span> <span class="pre">Title&quot;)+</span>&#160;&#160; <span class="pre">xlab(&quot;The</span> <span class="pre">X</span> <span class="pre">variable&quot;)+</span>&#160;&#160; <span class="pre">ylab(&quot;The</span> <span class="pre">Y</span> <span class="pre">variable&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">labs(title</span> <span class="pre">=</span> <span class="pre">&quot;My</span> <span class="pre">Plot</span> <span class="pre">Title&quot;,</span> <span class="pre">subtitle</span> <span class="pre">=</span> <span class="pre">&quot;My</span> <span class="pre">Plot</span> <span class="pre">subtitle&quot;,</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">&quot;The</span> <span class="pre">X</span> <span class="pre">Variable&quot;,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">&quot;The</span> <span class="pre">Y</span> <span class="pre">Variable&quot;)</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read_csv</span><span class="p">(</span><span class="s">&quot;./demo_data/gapminder.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">Rows: </span><span class=" -Color -Color-Blue">1704</span> <span class=" -Color -Color-Bold">Columns: </span><span class=" -Color -Color-Blue">6</span>
+<span class=" -Color -Color-Cyan">──</span> <span class=" -Color -Color-Bold">Column specification</span> <span class=" -Color -Color-Cyan">─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class=" -Color -Color-Bold">Delimiter:</span> &quot;,&quot;
+<span class=" -Color -Color-Red">chr</span> (2): country, continent
+<span class=" -Color -Color-Green">dbl</span> (4): year, lifeExp, pop, gdpPercap
+
+<span class=" -Color -Color-Cyan">ℹ</span> Use `spec()` to retrieve the full column specification for this data.
+<span class=" -Color -Color-Cyan">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A tibble: 6 × 6</caption>
+<thead>
+	<tr><th scope=col>country</th><th scope=col>continent</th><th scope=col>year</th><th scope=col>lifeExp</th><th scope=col>pop</th><th scope=col>gdpPercap</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Afghanistan</td><td>Asia</td><td>1952</td><td>28.801</td><td> 8425333</td><td>779.4453</td></tr>
+	<tr><td>Afghanistan</td><td>Asia</td><td>1957</td><td>30.332</td><td> 9240934</td><td>820.8530</td></tr>
+	<tr><td>Afghanistan</td><td>Asia</td><td>1962</td><td>31.997</td><td>10267083</td><td>853.1007</td></tr>
+	<tr><td>Afghanistan</td><td>Asia</td><td>1967</td><td>34.020</td><td>11537966</td><td>836.1971</td></tr>
+	<tr><td>Afghanistan</td><td>Asia</td><td>1972</td><td>36.088</td><td>13079460</td><td>739.9811</td></tr>
+	<tr><td>Afghanistan</td><td>Asia</td><td>1977</td><td>38.438</td><td>14880372</td><td>786.1134</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;My Plot Title&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;The X variable&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;The Y variable&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b6160c4cd430e97e4b0c0ee04aea388d0392ec42613860c1a4848de9eefda4f6.png" src="../_images/b6160c4cd430e97e4b0c0ee04aea388d0392ec42613860c1a4848de9eefda4f6.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;My Plot Title&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;My Plot subtitle&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The X Variable&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The Y Variable&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/fcaff3d871e2ab077be1f091577e9243d1faa2685b87893c74e25ee3f72483fa.png" src="../_images/fcaff3d871e2ab077be1f091577e9243d1faa2685b87893c74e25ee3f72483fa.png" />
+</div>
+</div>
+</section>
+<section id="id3">
+<h3>2 定制颜色<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>自定义颜色 <code class="docutils literal notranslate"><span class="pre">scale_color_manual()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">scale_fill_manual()</span></code></p></li>
+<li><p>已有颜色系统</p>
+<ul>
+<li><p>离散型变量 <code class="docutils literal notranslate"><span class="pre">scale_color_viridis_d()</span></code></p></li>
+<li><p>连续型变量 <code class="docutils literal notranslate"><span class="pre">scale_color_viridis_c()</span></code></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#195744&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#008148&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#C6C013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#EF8A17&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#EF2917&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b90105299e6191e2eafd95098cbaaa31228d8579f533e06d4caa8e091f55723d.png" src="../_images/b90105299e6191e2eafd95098cbaaa31228d8579f533e06d4caa8e091f55723d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_viridis_d</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/dd3a94a3b45ba9223b1978714c501d8f4b08003baf37ee066372911d5cf9a492.png" src="../_images/dd3a94a3b45ba9223b1978714c501d8f4b08003baf37ee066372911d5cf9a492.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2>组合图片<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>我们有时候想把多张图组合到一起</p>
+<section id="cowplot">
+<h3>1 <code class="docutils literal notranslate"><span class="pre">cowplot</span></code><a class="headerlink" href="#cowplot" title="Link to this heading">#</a></h3>
+<p>可以使用 <code class="docutils literal notranslate"><span class="pre">cowplot</span></code> 宏包的<code class="docutils literal notranslate"><span class="pre">plot_grid()</span></code>函数完成多张图片的组合，使用方法很简单。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">cowplot</span><span class="p">)</span>
+
+<span class="n">p1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">lifeExp</span><span class="p">)))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;orange&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pink&quot;</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;My Plot Title&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The X Variable&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The Y Variable&quot;</span><span class="p">)</span>
+
+<span class="n">p2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdpPercap</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#195744&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#008148&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#C6C013&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#EF8A17&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;#EF2917&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;My Plot Title&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The X Variable&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The Y Variable&quot;</span><span class="p">)</span>
+
+<span class="n">cowplot</span><span class="o">::</span><span class="nf">plot_grid</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3a90f33e0e211e95d600e59dd7bf695efab9170d4fd47394a95c87a489a69627.png" src="../_images/3a90f33e0e211e95d600e59dd7bf695efab9170d4fd47394a95c87a489a69627.png" />
+</div>
+</div>
+<p>也可以使用<code class="docutils literal notranslate"><span class="pre">patchwork</span></code>宏包，方法更简单</p>
+<p><code class="docutils literal notranslate"><span class="pre">plot_layout(guides</span> <span class="pre">=</span> <span class="pre">&quot;collect&quot;)</span></code> 表示将所有组合在一起的图形共享的图例合并到一个位置显示。</p>
+<p><code class="docutils literal notranslate"><span class="pre">plot_annotation(tag_levels</span> <span class="pre">=</span> <span class="pre">&quot;A&quot;,</span> <span class="pre">title</span> <span class="pre">=</span> <span class="pre">&quot;&quot;,subtitle</span> <span class="pre">=</span> <span class="pre">&quot;&quot;,caption</span> <span class="pre">=</span> <span class="pre">&quot;&quot;)</span></code>，用于对组合图的注释</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">patchwork</span><span class="p">)</span>
+
+<span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p2</span>
+
+<span class="n">p1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">p2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c8c1ff6b6827cf2010a1c083f5e9dfc4d4db17e810e794e475a9aea41984de45.png" src="../_images/c8c1ff6b6827cf2010a1c083f5e9dfc4d4db17e810e794e475a9aea41984de45.png" />
+<img alt="../_images/9e20eef975577e51074bbb177a560b98ee61d4464418a10c269568dd8828bfd5.png" src="../_images/9e20eef975577e51074bbb177a560b98ee61d4464418a10c269568dd8828bfd5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">plot_annotation</span><span class="p">(</span><span class="n">tag_levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                  </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The surprising truth about mtcars&quot;</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;These 3 plots will reveal yet-untold secrets about our beloved data-set&quot;</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">caption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Disclaimer: None of these plots are insightful&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4c372104282d2e441b55bac8b4b974f5e1eb329fb1278ab165b32eed2c09ea33.png" src="../_images/4c372104282d2e441b55bac8b4b974f5e1eb329fb1278ab165b32eed2c09ea33.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">palmerpenguins</span><span class="p">)</span>
+
+<span class="n">g1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">penguins</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">bill_length_mm</span><span class="p">,</span><span class="w"> </span><span class="n">body_mass_g</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme_bw</span><span class="p">(</span><span class="n">base_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Bill length (mm)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Bodu mass (g)&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(A)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">)</span>
+
+<span class="n">g2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">penguins</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">bill_length_mm</span><span class="p">,</span><span class="w"> </span><span class="n">bill_depth_mm</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme_bw</span><span class="p">(</span><span class="n">base_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Bill length (mm)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Bill depth (mm)&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(B)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Species&quot;</span><span class="p">)</span>
+
+<span class="n">g1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">g2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">patchwork</span><span class="o">::</span><span class="nf">plot_layout</span><span class="p">(</span><span class="n">guides</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;collect&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+“Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).”
+Warning message:
+“Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).”
+</pre></div>
+</div>
+<img alt="../_images/7ffcc95b957fa6fcf968d7296457ce32a9b9559dc275b2bcb09405551cdb494b.png" src="../_images/7ffcc95b957fa6fcf968d7296457ce32a9b9559dc275b2bcb09405551cdb494b.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">patchwork</span></code> 使用方法很简单<img alt="image.png" src="../_images/patchwork.png" /></p>
+</section>
+</section>
+<section id="id5">
+<h2>高亮某一组<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>画图很容易，然而画一张好图，不容易。图片质量好不好，其原则就是<strong>不增加看图者的心智负担</strong>，有些图片的色彩很丰富，然而需要看图人配合文字和图注等信息才能看懂作者想表达的意思，这样就失去了图片“一图胜千言”的价值。</p>
+<p>分析数据过程中，我们可以使用高亮我们某组数据，<strong>突出</strong>我们想表达的信息，是非常好的一种可视化探索手段。</p>
+<section id="id6">
+<h3>1 <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>方法<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>这种方法是将<strong>背景部分</strong>和<strong>高亮部分</strong>分两步来画</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">drop_facet</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">continent</span><span class="p">)</span>
+
+<span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drop_facet</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">),</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;grey&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">facet_wrap</span><span class="p">(</span><span class="nf">vars</span><span class="p">(</span><span class="n">continent</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a6d9a734b3715ad7fc3c407a6d301dbd7b5925154e72ba4e7ae92c459e8848cc.png" src="../_images/a6d9a734b3715ad7fc3c407a6d301dbd7b5925154e72ba4e7ae92c459e8848cc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">filter</span><span class="p">(</span><span class="n">continent</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Asia&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">country</span><span class="p">),</span><span class="w"> </span>
+<span class="w">            </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">group</span><span class="p">),</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;grey&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">),</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">facet_wrap</span><span class="p">(</span><span class="nf">vars</span><span class="p">(</span><span class="n">country</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d1f638e6d11ae85c7ea12ba9dbfd4f098d9e3cddf01293a73bf0b9e285d86239.png" src="../_images/d1f638e6d11ae85c7ea12ba9dbfd4f098d9e3cddf01293a73bf0b9e285d86239.png" />
+</div>
+</div>
+</section>
+<section id="gghighlight">
+<h3>.2 gghighlight方法<a class="headerlink" href="#gghighlight" title="Link to this heading">#</a></h3>
+<p>这里推荐<code class="docutils literal notranslate"><span class="pre">gghighlight</span></code>宏包</p>
+<ul class="simple">
+<li><p>dplyr has filter()</p></li>
+<li><p>ggplot has Highlighting</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">filter</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;China&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A spec_tbl_df: 12 × 6</caption>
+<thead>
+	<tr><th scope=col>country</th><th scope=col>continent</th><th scope=col>year</th><th scope=col>lifeExp</th><th scope=col>pop</th><th scope=col>gdpPercap</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>China</td><td>Asia</td><td>1952</td><td>44.00000</td><td> 556263527</td><td> 400.4486</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1957</td><td>50.54896</td><td> 637408000</td><td> 575.9870</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1962</td><td>44.50136</td><td> 665770000</td><td> 487.6740</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1967</td><td>58.38112</td><td> 754550000</td><td> 612.7057</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1972</td><td>63.11888</td><td> 862030000</td><td> 676.9001</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1977</td><td>63.96736</td><td> 943455000</td><td> 741.2375</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1982</td><td>65.52500</td><td>1000281000</td><td> 962.4214</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1987</td><td>67.27400</td><td>1084035000</td><td>1378.9040</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1992</td><td>68.69000</td><td>1164970000</td><td>1655.7842</td></tr>
+	<tr><td>China</td><td>Asia</td><td>1997</td><td>70.42600</td><td>1230075000</td><td>2289.2341</td></tr>
+	<tr><td>China</td><td>Asia</td><td>2002</td><td>72.02800</td><td>1280400000</td><td>3119.2809</td></tr>
+	<tr><td>China</td><td>Asia</td><td>2007</td><td>72.96100</td><td>1318683096</td><td>4959.1149</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span>
+<span class="w">             </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">continent</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">gghighlight</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;China&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">label_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+“Tried to calculate with group_by(), but the calculation failed.
+Falling back to ungrouped filter operation...”
+</pre></div>
+</div>
+<img alt="../_images/16d3b0fd6a97c290bfa7e2a065e2ec32812dd815817eae946d0e7e1a918dca70.png" src="../_images/16d3b0fd6a97c290bfa7e2a065e2ec32812dd815817eae946d0e7e1a918dca70.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">gapdata</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">filter</span><span class="p">(</span><span class="n">continent</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Asia&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">lifeExp</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">country</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.2</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.9</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;#E58C23&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme_minimal</span><span class="p">(</span><span class="n">base_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">panel.grid.major.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_blank</span><span class="p">(),</span><span class="w"> </span>
+<span class="w">        </span><span class="n">panel.grid.minor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_blank</span><span class="p">()</span><span class="w">  </span>
+<span class="w">        </span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">gghighlight</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;China&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;India&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Japan&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Korea, Rep.&quot;</span><span class="p">),</span>
+<span class="w">              </span><span class="n">use_group_by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span>
+<span class="w">              </span><span class="n">use_direct_label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span>
+<span class="w">              </span><span class="n">unhighlighted_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;grey90&quot;</span><span class="p">)</span>
+<span class="w">             </span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">facet_wrap</span><span class="p">(</span><span class="nf">vars</span><span class="p">(</span><span class="n">country</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7b8422bc20001dacba46ac097995bf621980f0e8633c0b458e21dbcf4349848d.png" src="../_images/7b8422bc20001dacba46ac097995bf621980f0e8633c0b458e21dbcf4349848d.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="d">
+<h2>3D效果<a class="headerlink" href="#d" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ggfx::with_shadow()</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">ggfx</span><span class="p">)</span>
+
+<span class="n">mtcars</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">disp</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="n">ggfx</span><span class="o">::</span><span class="nf">with_shadow</span><span class="p">(</span><span class="nf">geom_smooth</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">sigma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="n">ggfx</span><span class="o">::</span><span class="nf">with_shadow</span><span class="p">(</span><span class="nf">geom_point</span><span class="p">(),</span><span class="w"> </span><span class="n">sigma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
+</pre></div>
+</div>
+<img alt="../_images/52941cb8530afe18d8e80858af959da0a0871b6feddcd0af56d6dbdf5276f4b5.png" src="../_images/52941cb8530afe18d8e80858af959da0a0871b6feddcd0af56d6dbdf5276f4b5.png" />
+</div>
+</div>
+</section>
+<section id="id7">
+<h2>弯曲文本<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>弯曲文本，使其匹配多种图形的轨迹。</p>
+<p><code class="docutils literal notranslate"><span class="pre">geomtextpath::geom_textdensity()</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">geomtextpath::geom_labelsmooth()</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># install.packages(&quot;geomtextpath&quot;)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">geomtextpath</span><span class="p">)</span>
+
+<span class="n">iris</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sepal.Length</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Species</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Species</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="n">geomtextpath</span><span class="o">::</span><span class="nf">geom_textdensity</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">fontface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                                 </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.3</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2c86ee218b9904d520f8fd6a6c3d6c669da96bd0a8e2108253c5faaacec3865a.png" src="../_images/2c86ee218b9904d520f8fd6a6c3d6c669da96bd0a8e2108253c5faaacec3865a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">palmerpenguins</span><span class="p">)</span>
+
+<span class="n">penguins</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bill_length_mm</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bill_depth_mm</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.3</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_labelsmooth</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">),</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;loess&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                   </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;forestgreen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;deepskyblue4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tomato4&quot;</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`geom_smooth()` using formula = &#39;y ~ x&#39;
+Warning message:
+“Removed 2 rows containing non-finite outside the scale range (`stat_smooth()`).”
+Warning message:
+“Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).”
+</pre></div>
+</div>
+<img alt="../_images/882f01fe525c5fe5b06b330c938b0253204628dcb83526922903f6d0af2dbb50.png" src="../_images/882f01fe525c5fe5b06b330c938b0253204628dcb83526922903f6d0af2dbb50.png" />
+</div>
+</div>
+</section>
+<section id="id8">
+<h2>函数图<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">stat_function()</span></code></p>
+<p>有时候我们想画一个函数图，比如正态分布的函数，可能会想到先产生数据，然后画图，比如下面的代码</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">tibble</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-3</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">mutate</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_line</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;grey33&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/aba66cc52c7351d305dc0bde85ac69c8bcf72a5d4cede828b51c19feebb0ffd4.png" src="../_images/aba66cc52c7351d305dc0bde85ac69c8bcf72a5d4cede828b51c19feebb0ffd4.png" />
+</div>
+</div>
+<p>事实上，<code class="docutils literal notranslate"><span class="pre">stat_function()</span></code>可以简化这个过程</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">stat_function</span><span class="p">(</span><span class="n">fun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dnorm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/94eb1bb4297d844344ab4c4affba29a7f4c98b70be3f6332313adf851569a4fb.png" src="../_images/94eb1bb4297d844344ab4c4affba29a7f4c98b70be3f6332313adf851569a4fb.png" />
+</div>
+</div>
+<p>支持绘制自定义函数</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">myfun</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
+<span class="w">    </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="m">-1</span><span class="p">)</span><span class="o">**</span><span class="m">2</span>
+<span class="p">}</span>
+
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">stat_function</span><span class="p">(</span><span class="n">fun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">myfun</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                </span><span class="n">geom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;line&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9a4a1cd5a5fe377c0a7eb64ba8b776f4d0ac90c10afacde4d5f640295cf259d3.png" src="../_images/9a4a1cd5a5fe377c0a7eb64ba8b776f4d0ac90c10afacde4d5f640295cf259d3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">2000</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">))</span>
+
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_histogram</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">after_stat</span><span class="p">(</span><span class="n">density</span><span class="p">)))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_density</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">stat_function</span><span class="p">(</span><span class="n">fun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dnorm</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">),</span>
+<span class="w">                </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+</pre></div>
+</div>
+<img alt="../_images/c1bb179216c57f604a0f630a50a6ebfce1a7d3e0aaabda11f7f317a0e402409f.png" src="../_images/c1bb179216c57f604a0f630a50a6ebfce1a7d3e0aaabda11f7f317a0e402409f.png" />
+</div>
+</div>
+</section>
+<section id="latex">
+<h2>latex公式<a class="headerlink" href="#latex" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">latex2exp</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">annotate</span><span class="p">(</span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">40</span><span class="p">,</span>
+<span class="w">           </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">TeX</span><span class="p">(</span><span class="s">&quot;$\\alpha^2 + $\\theta^2 = \\omega^2 $&quot;</span><span class="p">),</span>
+<span class="w">           </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">TeX</span><span class="p">(</span><span class="s">&quot;The ratio of 1 and 2 is $\\,\\, \\frac{1}{2}$&quot;</span><span class="p">),</span>
+<span class="w">       </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">TeX</span><span class="p">(</span><span class="s">&quot;$\\alpha$&quot;</span><span class="p">),</span>
+<span class="w">       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">TeX</span><span class="p">(</span><span class="s">&quot;$\\alpha^2$&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in is.na(x):
+“is.na()不适用于类别为&#39;expression&#39;的非串列或非矢量”
+</pre></div>
+</div>
+<img alt="../_images/dd00fc77ce6085b9333a15098505635db1f54a07d8b5e4c205142514e2913890.png" src="../_images/dd00fc77ce6085b9333a15098505635db1f54a07d8b5e4c205142514e2913890.png" />
+</div>
+</div>
+</section>
+<section id="coord-cartesian-scale-x-continuous">
+<h2>“coord_cartesian() 与 scale_x_continuous()”<a class="headerlink" href="#coord-cartesian-scale-x-continuous" title="Link to this heading">#</a></h2>
+<p>乍一看，这两个操作没有区别</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">wt</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">scale_x_continuous</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">325</span><span class="p">,</span><span class="w"> </span><span class="m">500</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;scale_x_continuous(limits = c(325, 500))&quot;</span><span class="p">)</span>
+
+<span class="n">p2</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span>
+<span class="w">  </span><span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">wt</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">coord_cartesian</span><span class="p">(</span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">325</span><span class="p">,</span><span class="w"> </span><span class="m">500</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;coord_cartesian(xlim = c(325, 500))&quot;</span><span class="p">)</span>
+
+
+<span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+“Removed 24 rows containing missing values or values outside the scale range (`geom_point()`).”
+</pre></div>
+</div>
+<img alt="../_images/b7b6388a6d449df535a885b31bb125f15dd854c72e6afb4eaaa9cb53f9a6cf82.png" src="../_images/b7b6388a6d449df535a885b31bb125f15dd854c72e6afb4eaaa9cb53f9a6cf82.png" />
+</div>
+</div>
+<p>实际上这两个操作，区别蛮大的</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">定制</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1 标签</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2 定制颜色</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">组合图片</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cowplot">1 <code class="docutils literal notranslate"><span class="pre">cowplot</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">高亮某一组</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1 <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gghighlight">.2 gghighlight方法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d">3D效果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">弯曲文本</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">函数图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latex">latex公式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coord-cartesian-scale-x-continuous">“coord_cartesian() 与 scale_x_continuous()”</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Lulu Shi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
