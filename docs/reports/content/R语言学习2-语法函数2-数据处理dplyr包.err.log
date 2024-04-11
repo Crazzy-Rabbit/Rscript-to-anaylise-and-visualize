@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/public/home/sll/miniconda3/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/public/home/sll/miniconda3/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/public/home/sll/miniconda3/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 173, in wrapped
+    return loop.run_until_complete(inner)
+  File "/public/home/sll/miniconda3/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/public/home/sll/miniconda3/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/public/home/sll/miniconda3/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/public/home/sll/miniconda3/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+here::here("software", "smoove")
+d <- read.table(file= "./data/txt_file.txt", header = TRUE)
+------------------
+
+----- stderr -----
+Warning message in file(file, "rt"):
+“无法打开文件'./data/txt_file.txt': 没有那个文件或目录”
+------------------
+
+Error in file(file, "rt"): 无法打开链结
+Traceback:
+
+1. read.table(file = "./data/txt_file.txt", header = TRUE)
+2. file(file, "rt")
+
