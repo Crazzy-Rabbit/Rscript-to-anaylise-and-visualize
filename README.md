@@ -46,6 +46,8 @@
     - [X] ![1 6_CV](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/af3829ba-48ae-4122-b481-ff4e45c419ee)
     - [X] ![1 7_6admixture](https://github.com/Crazzy-Rabbit/Rscript-to-anaylise-and-visualize/assets/111029483/27852037-9b8a-4c4d-b843-1f1edbb7fb4a)
 
+- [x] locuszoom
+      - [x] ![locuszoom](https://github.com/user-attachments/assets/18766ec6-276a-4cb1-8168-37ae406d48d8)
 
 
   
