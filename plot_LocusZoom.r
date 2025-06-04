@@ -22,7 +22,9 @@
 #  2025/04/27
 #  1. script completed 
 #  2. first realeased
-#
+#  2025/06/04
+#  1. fixed the bug that generate two xlab
+#  2. fixed some error
 # Usages:
 #     source("plot_Locouszoom.R")
 #     LZData <- ReadLocusZoomData(gwas="gwas_chrpos.gz", ld_info="plink.ld", snp="rs641221")
@@ -30,6 +32,7 @@
 #     plot_locuszoom(data=pltdt, genelist="glist_hg19_refseq.txt")
 #     dev.off()
 # ===========================================================================================//
+library(data.table)
 ReadLocusZoomData <- function(gwas, ld_info, snp, flank=500000){
     gwas=fread(gwas)
     if(!all(c("SNP", "p", "CHR") %in% names(gwas))) stop("The gwas you provide not contains columns SNP, CHR, and p")
@@ -46,20 +49,21 @@ ReadLocusZoomData <- function(gwas, ld_info, snp, flank=500000){
     snp_ld=merge(gwas,ld,by="SNP")
     region_data=subset(snp_ld, POS >= (top_snp$POS-flank) & POS <= (top_snp$POS+flank))
     region_data=region_data[order(region_data$POS),]
-
-    #-------------- set color ---//
-    color_func=colorRampPalette(c("#14128c","#29d8ca","#065f1a","#ec7807","#fc1403"))
-    breaks=c(0,0.2,0.4,0.6,0.8,1.0)
-    color_pal=color_func(length(breaks)-1)
-    region_data$color=color_pal[cut(region_data$R2, breaks=breaks, include.lowest=TRUE)]
     
     return_list=list(topsnp=top_snp, region_dt=region_data)
     return(return_list)
 }
 
 plot_locuszoom <- function(data, genelist, flank=500000) {
-    top_snp=data$topsnp;
+    #-------------- set color ---//
+    color_func=colorRampPalette(c("#14128c","#29d8ca","#065f1a","#ec7807","#fc1403"));
+    breaks=c(0,0.2,0.4,0.6,0.8,1.0);
+    color_pal=color_func(length(breaks)-1)
     region_data=data$region_dt; 
+    region_data$color=color_pal[cut(region_data$R2, breaks=breaks, include.lowest=TRUE)];
+    
+    #------------- plot parm ---//
+    top_snp=data$topsnp;
     gwasBP=region_data$POS/1e6; 
     pXY=-log10(region_data$p); 
     color=region_data$color; 
@@ -77,7 +81,7 @@ plot_locuszoom <- function(data, genelist, flank=500000) {
     
     #---------- plot start ----//
     par(mar=c(5,5,3,2), xpd=TRUE)
-    plot(gwasBP,pXY,pch=21,bg=color,col="gray30",cex=1.8,lwd=0.2,yaxt="n",bty="n",
+    plot(gwasBP,pXY,pch=21,bg=color,col="gray30",cex=1.8,lwd=0.2,yaxt="n",xaxt="n",bty="n",
     xlab=xlab, ylab="", xlim=c(xmin,xmax), ylim=c(ymin,ymax))
     xticks=round(seq(xmin,xmax,length.out=6),2)
     axis(1,at=xticks,lwd=1) 
@@ -90,6 +94,7 @@ plot_locuszoom <- function(data, genelist, flank=500000) {
     text(top_snp$POS/1e6, -log10(top_snp$p), labels=top_snp$SNP, pos=3, cex=0.8, offset=0.5)
 
     #-------- plot gene ----//
+    if (is.null(genelist)) stop("Please provide the genelist file")
     glist=fread(genelist, col.names=c("CHR", "start", "end", "GENE", "strand"))
     xcenter=top_snp$POS;
     xchr=top_snp$CHR;
@@ -141,13 +146,12 @@ plot_locuszoom <- function(data, genelist, flank=500000) {
     legend_width=0.02*(usr[2]-usr[1]);  # legend width set as 5% of fig region
     left_margin=0.10*(usr[2]-usr[1]);
     down_margin=0.10*(usr[4]-usr[3]);
-    breaks=c(0,0.2,0.4,0.6,0.8,1.0);
 
     legend_x_left=usr[2]-legend_width-left_margin; 
     legend_x_right=usr[2]-left_margin;
     legend_y_bottom=usr[4]-0.3*(usr[4]-usr[3])-down_margin;  
     legend_y_top=usr[4]-down_margin;                           
-    legend_y_pos=seq(legend_y_bottom, y_top, length.out=length(breaks)); 
+    legend_y_pos=seq(legend_y_bottom, legend_y_top, length.out=length(breaks)); 
     
     tit=expression(italic(r)^2)
     for (i in 1:(length(breaks)-1)) {
