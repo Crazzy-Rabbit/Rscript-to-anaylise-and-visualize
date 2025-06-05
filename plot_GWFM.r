@@ -128,7 +128,7 @@ ReadPvalueFromFiles <- function(gwas, gwfm, glist, windowsize=500000, highlight)
     colnames(glist) = c("CHR", "GENESTART",  "GENEEND",  "GENE", "ORIENTATION")
     glist = glist[glist$CHR == chrom & glist$GENESTART >= start & glist$GENEEND <= end, ]
 
-    return_lsit = list(file1=file1, file2=file2, SNP=highlight, glist=glist)
+    return_lsit = list(file1=file1, file2=file2, SNP=highlight, glist=glist, CHR=chrom)
 }
 
 
@@ -158,7 +158,7 @@ MultiPvalueLocusPlot <- function(data) {
     xmax = max(c(gwasBP1, gwasBP2), na.rm=T) + 0.01;
     
     
-    xlab = paste("Chromsome ", CHR, " (Mb)")
+    xlab = paste("Chromsome ", data$CHR, " (Mb)")
     #------------------- plot gwas layer ----//
     ylab1 = expression(-log[10] (italic(P) * " GWAS"))
     par(mar=c(5,5,3,2), xpd=TRUE);
