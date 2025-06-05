@@ -49,6 +49,10 @@
 - [x] locuszoom
       ![locuszoom](https://github.com/user-attachments/assets/18766ec6-276a-4cb1-8168-37ae406d48d8)
 
+- [x] GWFM plot (GCTB genome wide fine mapping)
+      ![GWFM](https://github.com/user-attachments/assets/70b287bc-c100-4cf8-ae85-cb00310b21ae)
+
+
 
   
 
