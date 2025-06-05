@@ -154,8 +154,8 @@ MultiPvalueLocusPlot <- function(data) {
     yaxis.max = yMAX + ceiling(offset_pip) + 1;
     gwasBP1 = as.numeric(gwas1$BP) / 1e6;
     gwasBP2 = as.numeric(gwas2$BP) / 1e6;
-    xmin = min(c(gwasBP1, gwasBP2), na.rm=T) - 0.01;
-    xmax = max(c(gwasBP1, gwasBP2), na.rm=T) + 0.01;
+    xmin = min(c(gwasBP1, gwasBP2), na.rm=T) - 0.001;
+    xmax = max(c(gwasBP1, gwasBP2), na.rm=T) + 0.001;
     
     
     xlab = paste("Chromsome ", data$CHR, " (Mb)")
