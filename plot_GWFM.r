@@ -5,7 +5,7 @@
 # @Mails   :    crazzy_rabbit@163.com
 # @line    :    https://github.com/Crazzy-Rabbit
 #
-# R script to draw regional plot for fine mapping SNPs.
+# R script to draw regional plot for genome wide fine mapping SNPs (serve GCTB).
 #
 # Part of code are adopted from plot_smr script which provided by SMR
 #
