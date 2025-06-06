@@ -5,7 +5,7 @@
 # @Mails   :    crazzy_rabbit@163.com
 # @line    :    https://github.com/Crazzy-Rabbit
 #
-# R script to draw regional plot for genome wide fine mapping SNPs (serve GCTB).
+# R script to draw regional plot for genome wide fine mapping SNPs.
 #
 # Part of code are adopted from plot_smr script which provided by SMR
 #
@@ -13,6 +13,7 @@
 #  2025/06/05
 #    1. script completed 
 #    2. first realeased
+#    3. fixed teh bug where the drawn gene was not in the middle of the genelayer when nrowgene=1
 #
 # Usages:
 #     source("plot_GWFM.r")
@@ -211,17 +212,31 @@ MultiPvalueLocusPlot <- function(data) {
         xcenter = (xstart+xend)/2
         xcenter = spread.labs(xcenter, mindiff=0.01, maxiter=1000, min=xmin, max=xmax)
         num_genebuf = dim(generowbuf)[1]
-        for (l in 1:num_genebuf) {
-            ofs=0.3
-            if(l%%2==0) ofs=-0.8
-            m = num_row - k
-            ypos = m*dist + yaxis.min
-            code = 1;
-            if (generowbuf[l,2] == "+") code = 2;
-            arrows(x0=xstart[l], y0=ypos, x1=xend[l], y1=ypos, code=code, length=0.07, ylim=c(yaxis.min, yaxis.max),
-            col=colors()[75], lwd=1)
-            movebuf = as.numeric(generowbuf[l,6]) * genemove
-            text(x=xcenter[l]+movebuf, y=ypos, label=substitute(italic(genename), list(genename=as.character(generowbuf[l,1]))), pos=3, offset=ofs, col="black", cex=0.9)
+        if (num_row == 1) {
+            for (l in 1:num_genebuf) {
+                ofs=0.3;
+                if (l%%2 == 0) ofs=-0.8;
+                ypos = offset_map/2 + yaxis.min - 1;
+                code = 1;
+                if (generowbuf[l,2] == "+") code=2;
+                arrows(x0=xstart[l], y0=ypos, x1=xend[l], y1=ypos, code=code, length=0.07, ylim=c(yaxis.min, yaxis.max),
+                col=colors()[75], lwd=1)
+                movebuf = as.numeric(generowbuf[l, 6]) * genemove
+                text(x=xcenter[l]+movebuf, y=ypos, label=substitute(italic(genename), list(genename=as.character(generowbuf[l,1]))), pos=3, offset=ofs, col="black", cex=0.9)
+            }
+        } else if (num_row > 1) {
+            for (l in 1:num_genebuf) {
+                ofs=0.3
+                if(l%%2==0) ofs=-0.8
+                m = num_row - k
+                ypos = m*dist + yaxis.min
+                code = 1;
+                if (generowbuf[l,2] == "+") code = 2;
+                arrows(x0=xstart[l], y0=ypos, x1=xend[l], y1=ypos, code=code, length=0.07, ylim=c(yaxis.min, yaxis.max),
+                col=colors()[75], lwd=1)
+                movebuf = as.numeric(generowbuf[l,6]) * genemove
+                text(x=xcenter[l]+movebuf, y=ypos, label=substitute(italic(genename), list(genename=as.character(generowbuf[l,1]))), pos=3, offset=ofs, col="black", cex=0.9)
+            }
         }
     }
 }
