@@ -1,7 +1,7 @@
 # ===========================================================================================//
 # @Author  :    Loren Shi
 # @Time    :    2025/04/27 10:37:43
-# @File    :    plot_Locouszoom.R
+# @File    :    plot_LocusZoom.r
 # @Mails   :    crazzy_rabbit@163.com
 # @line    :    https://github.com/Crazzy-Rabbit
 #
@@ -31,10 +31,10 @@
 #    3. Optimize the problem of gene and genename display overlap
 #
 # Usages:
-#     source("plot_Locouszoom.R")
+#     source("plot_LocusZoom.r")
 #     LZData <- ReadLocusZoomData(gwas="gwas_chrpos.gz", ld_info="plink.ld", snp="rs641221")
 #     pdf('locuszoom.pdf',width = 6,height = 4)
-#     plot_locuszoom(data=pltdt, genelist="glist_hg19_refseq.txt")
+#     plot_locuszoom(data=LZData, genelist="glist_hg19_refseq.txt")
 #     dev.off()
 # ===========================================================================================//
 is.installed <- function(mypkg){

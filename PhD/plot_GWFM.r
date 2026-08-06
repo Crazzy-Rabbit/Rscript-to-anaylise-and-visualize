@@ -159,7 +159,7 @@ MultiPvalueLocusPlot <- function(data) {
     xmax = max(c(gwasBP1, gwasBP2), na.rm=T) + 0.001;
     
     
-    xlab = paste("Chromsome ", data$CHR, " (Mb)")
+    xlab = paste("Chromosome ", data$CHR, " (Mb)")
     #------------------- plot gwas layer ----//
     ylab1 = expression(-log[10] (italic(P) * " GWAS"))
     par(mar=c(5,5,3,2), xpd=TRUE);
