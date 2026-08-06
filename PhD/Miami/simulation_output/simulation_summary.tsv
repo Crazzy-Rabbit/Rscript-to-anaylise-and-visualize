@@ -1,0 +1,9 @@
+metric	value
+genes_per_dataset	13000
+bonferroni_threshold_top	3.84615384615385e-06
+bonferroni_threshold_bottom	3.84615384615385e-06
+shared_pass	40
+top_specific_pass_and_highlighted	25
+bottom_specific_pass	25
+top_heidi_rejected	15
+bottom_heidi_rejected	15
